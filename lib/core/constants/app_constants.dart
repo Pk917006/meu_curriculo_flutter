@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppAssets {
   // Imagens (baseado nos arquivos que você subiu)
-  static const String profileImage = 'assets/img/profile3.png';
+  static const String profileImage = 'assets/img/minha_foto.jpg';
 
   // Documentos
   static const String cvPtBr =
