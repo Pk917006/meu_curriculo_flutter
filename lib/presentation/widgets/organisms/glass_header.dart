@@ -86,6 +86,13 @@ class GlassHeader extends StatelessWidget {
                                 controller.projectsKey,
                               ),
                             ),
+                            const SizedBox(width: 20),
+                            _HeaderItem(
+                              title: "Certificados",
+                              onTap: () => controller.scrollToSection(
+                                controller.certificatesKey,
+                              ),
+                            ),
                             const SizedBox(width: 30),
 
                             // Theme Toggle Switch
@@ -122,6 +129,10 @@ class GlassHeader extends StatelessWidget {
                               controller.scrollToSection(
                                 controller.projectsKey,
                               );
+                            } else if (value == 'certificates') {
+                              controller.scrollToSection(
+                                controller.certificatesKey,
+                              );
                             }
                           },
                           itemBuilder: (BuildContext context) => [
@@ -136,6 +147,10 @@ class GlassHeader extends StatelessWidget {
                             const PopupMenuItem(
                               value: 'projects',
                               child: Text('Projetos'),
+                            ),
+                            const PopupMenuItem(
+                              value: 'certificates',
+                              child: Text('Certificados'),
                             ),
                             PopupMenuItem(
                               value: 'theme',

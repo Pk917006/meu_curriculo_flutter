@@ -13,6 +13,7 @@ import '../widgets/organisms/glass_header.dart';
 import '../widgets/organisms/hero_section.dart';
 import '../widgets/organisms/projects_section.dart';
 import '../widgets/organisms/skills_section.dart';
+import '../widgets/organisms/certificates_section.dart';
 
 import '../widgets/atoms/background_pattern.dart'; // Importe a textura
 import '../widgets/organisms/intro_overlay.dart'; // Importe o IntroOverlay
@@ -105,6 +106,12 @@ class _HomePageState extends State<HomePage> {
                                   key: controller.projectsKey,
                                   projects: controller.projects,
                                 ), // Key aqui
+                                const SizedBox(height: 100),
+
+                                CertificatesSection(
+                                  key: controller.certificatesKey,
+                                  certificates: controller.certificates,
+                                ),
                                 const SizedBox(height: 150),
 
                                 // Footer com Copyright

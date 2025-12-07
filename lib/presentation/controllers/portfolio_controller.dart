@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../data/models/experience_model.dart';
 import '../../data/models/project_model.dart';
 import '../../data/models/skill_model.dart';
+import '../../data/models/certificate_model.dart';
 import '../../data/repositories/portfolio_repository.dart';
 
 class PortfolioController extends ChangeNotifier {
@@ -16,6 +17,7 @@ class PortfolioController extends ChangeNotifier {
   List<ProjectModel> projects = [];
   List<ExperienceModel> experiences = [];
   List<SkillModel> skills = [];
+  List<CertificateModel> certificates = [];
   bool isLoading = true;
   String? errorMessage;
 
@@ -36,6 +38,7 @@ class PortfolioController extends ChangeNotifier {
   final skillsKey = GlobalKey();
   final experienceKey = GlobalKey();
   final projectsKey = GlobalKey();
+  final certificatesKey = GlobalKey();
 
   Future<void> scrollToSection(GlobalKey key) async {
     final context = key.currentContext;
@@ -55,7 +58,12 @@ class PortfolioController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await Future.wait([_loadProjects(), _loadExperiences(), _loadSkills()]);
+      await Future.wait([
+        _loadProjects(),
+        _loadExperiences(),
+        _loadSkills(),
+        _loadCertificates(),
+      ]);
     } catch (e) {
       debugPrint('Erro ao carregar dados: $e');
       errorMessage = 'Falha ao carregar dados. Verifique sua conexão.';
@@ -70,4 +78,6 @@ class PortfolioController extends ChangeNotifier {
   Future<void> _loadExperiences() async =>
       experiences = await repository.getExperiences();
   Future<void> _loadSkills() async => skills = await repository.getSkills();
+  Future<void> _loadCertificates() async =>
+      certificates = await repository.getCertificates();
 }

@@ -2,6 +2,7 @@
 import '../models/experience_model.dart';
 import '../models/project_model.dart';
 import '../models/skill_model.dart';
+import '../models/certificate_model.dart';
 
 class MockData {
   // --- EXPERIÊNCIAS, PROJETOS E SKILLS ATUALIZADOS ---
@@ -105,5 +106,24 @@ class MockData {
     SkillModel(name: 'Xcode', type: SkillType.tools),
     SkillModel(name: 'Supabase', type: SkillType.tools, isHighlight: true),
     SkillModel(name: 'Linux', type: SkillType.tools),
+  ];
+
+  static const List<CertificateModel> certificates = [
+    CertificateModel(
+      title: 'Flutter & Dart - The Complete Guide',
+      issuer: 'Udemy',
+      date: '2024',
+      credentialUrl: 'https://www.udemy.com/certificate/UC-XXXXX/',
+    ),
+    CertificateModel(
+      title: 'Clean Architecture em Flutter',
+      issuer: 'Udemy',
+      date: '2024',
+    ),
+    CertificateModel(
+      title: 'Ignite - React Native',
+      issuer: 'Rocketseat',
+      date: '2023',
+    ),
   ];
 }
