@@ -177,24 +177,34 @@ class HeroSection extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              // Nome com Efeito de Cor
+              // Nome com Efeito de Cor e Glitch
               Text(
-                    AppStrings.portfolioTitle.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      fontWeight: FontWeight.w900,
-                      fontSize: isMobile ? 40 : 72,
-                      height: 0.9,
-                      letterSpacing: -2,
-                    ),
-                  )
-                  .animate(onPlay: (controller) => controller.repeat())
+                AppStrings.portfolioTitle.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                  fontWeight: FontWeight.w900,
+                  fontSize: isMobile ? 40 : 72,
+                  height: 0.9,
+                  letterSpacing: -2,
+                ),
+              )
+                  .animate()
+                  .fadeIn(duration: 800.ms)
+                  .slideY(begin: 0.2, end: 0)
+                  .then()
                   .shimmer(
-                    duration: 3.seconds,
+                    duration: 2.seconds,
                     color: const Color(AppColors.primary).withOpacity(0.3),
                   )
-                  .animate()
-                  .fadeIn(duration: 800.ms),
+                  .animate(
+                    onPlay: (controller) =>
+                        controller.repeat(period: 5.seconds),
+                  )
+                  .tint(
+                    color: const Color(AppColors.primary).withOpacity(0.5),
+                    duration: 200.ms,
+                  )
+                  .shake(hz: 3, curve: Curves.easeInOut, duration: 300.ms),
 
               const SizedBox(height: 10),
 
