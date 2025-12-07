@@ -1,34 +1,96 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:meu_curriculo_flutter/main.dart';
+import 'package:meu_curriculo_flutter/data/repositories/portfolio_repository.dart';
+import 'package:meu_curriculo_flutter/l10n/arb/app_localizations.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/portfolio_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/pages/home_page.dart';
+
+class MockPortfolioRepository extends Mock implements IPortfolioRepository {}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MeuCurriculoApp());
+  late MockPortfolioRepository mockRepository;
+  late PortfolioController controller;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  setUp(() {
+    mockRepository = MockPortfolioRepository();
+    controller = PortfolioController(mockRepository);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Default stubs
+    when(() => mockRepository.getProjects()).thenAnswer((_) async => []);
+    when(() => mockRepository.getExperiences()).thenAnswer((_) async => []);
+    when(() => mockRepository.getSkills()).thenAnswer((_) async => []);
+    when(() => mockRepository.getCertificates()).thenAnswer((_) async => []);
+  });
+
+  Widget createWidgetUnderTest() {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<PortfolioController>.value(value: controller),
+      ],
+      child: const MaterialApp(
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [Locale('pt')],
+        home: HomePage(),
+      ),
+    );
+  }
+
+  testWidgets('HomePage loads data on startup', (WidgetTester tester) async {
+    // Set a large screen size to avoid overflows in desktop layout
+    tester.view.physicalSize = const Size(1920, 1080);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(createWidgetUnderTest());
+
+    // Verify that loadAllData was called (it's called in addPostFrameCallback)
+    // We need to pump to allow the callback to execute
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    verify(() => mockRepository.getProjects()).called(1);
+    verify(() => mockRepository.getExperiences()).called(1);
+    verify(() => mockRepository.getSkills()).called(1);
+    verify(() => mockRepository.getCertificates()).called(1);
+  });
+
+  testWidgets('HomePage shows error message when loading fails', (
+    WidgetTester tester,
+  ) async {
+    // Set a large screen size to avoid overflows in desktop layout
+    tester.view.physicalSize = const Size(1920, 1080);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    // Arrange
+    when(
+      () => mockRepository.getProjects(),
+    ).thenThrow(Exception('Erro de teste'));
+
+    // Act
+    await tester.pumpWidget(createWidgetUnderTest());
+    await tester.pump(); // Run addPostFrameCallback
+    await tester.pump(); // Rebuild with error (notifyListeners)
+
+    // Assert
+    expect(
+      find.text('Falha ao carregar dados. Verifique sua conexão.'),
+      findsOneWidget,
+    );
+    expect(find.text('Tentar novamente'), findsOneWidget);
   });
 }
