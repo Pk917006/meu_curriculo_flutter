@@ -1,8 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:provider/provider.dart';
+
+// Project imports:
 import '../../../data/models/project_model.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/portfolio_controller.dart';
+import '../atoms/custom_text_field.dart';
+import '../atoms/tech_autocomplete_field.dart';
 
 class ProjectForm extends StatefulWidget {
   final ProjectModel? project;
@@ -19,8 +26,9 @@ class _ProjectFormState extends State<ProjectForm> {
   late TextEditingController _repoCtrl;
   late TextEditingController _liveCtrl;
   late TextEditingController _imgCtrl;
-  late TextEditingController _techCtrl;
+  final TextEditingController _techInputCtrl = TextEditingController();
 
+  List<String> _selectedTechs = [];
   bool _isLoading = false;
 
   @override
@@ -31,9 +39,7 @@ class _ProjectFormState extends State<ProjectForm> {
     _repoCtrl = TextEditingController(text: widget.project?.repoUrl ?? '');
     _liveCtrl = TextEditingController(text: widget.project?.liveUrl ?? '');
     _imgCtrl = TextEditingController(text: widget.project?.imageUrl ?? '');
-    _techCtrl = TextEditingController(
-      text: widget.project?.techStack.join(', ') ?? '',
-    );
+    _selectedTechs = List.from(widget.project?.techStack ?? []);
   }
 
   @override
@@ -43,7 +49,7 @@ class _ProjectFormState extends State<ProjectForm> {
     _repoCtrl.dispose();
     _liveCtrl.dispose();
     _imgCtrl.dispose();
-    _techCtrl.dispose();
+    _techInputCtrl.dispose();
     super.dispose();
   }
 
@@ -52,12 +58,6 @@ class _ProjectFormState extends State<ProjectForm> {
 
     setState(() => _isLoading = true);
 
-    final techStack = _techCtrl.text
-        .split(',')
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .toList();
-
     final model = ProjectModel(
       id: widget.project?.id,
       title: _titleCtrl.text,
@@ -65,7 +65,7 @@ class _ProjectFormState extends State<ProjectForm> {
       repoUrl: _repoCtrl.text,
       liveUrl: _liveCtrl.text.isEmpty ? null : _liveCtrl.text,
       imageUrl: _imgCtrl.text.isEmpty ? null : _imgCtrl.text,
-      techStack: techStack,
+      techStack: _selectedTechs,
     );
 
     try {
@@ -102,65 +102,165 @@ class _ProjectFormState extends State<ProjectForm> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(widget.project == null ? 'Novo Projeto' : 'Editar Projeto'),
-      content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                controller: _titleCtrl,
-                decoration: const InputDecoration(labelText: 'Título *'),
-                validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
-              ),
-              TextFormField(
-                controller: _descCtrl,
-                decoration: const InputDecoration(labelText: 'Descrição *'),
-                maxLines: 3,
-                validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
-              ),
-              TextFormField(
-                controller: _techCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Tecnologias (separadas por vírgula) *',
-                  hintText: 'Flutter, Dart, Firebase',
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 600),
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.project == null ? 'Novo Projeto' : 'Editar Projeto',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
-              ),
-              TextFormField(
-                controller: _repoCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'URL do Repositório *',
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close),
                 ),
-                validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
-              ),
-              TextFormField(
-                controller: _liveCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'URL do Deploy (Opcional)',
+              ],
+            ),
+            const Divider(),
+            const SizedBox(height: 16),
+            Flexible(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        controller: _titleCtrl,
+                        label: 'Título',
+                        icon: Icons.title,
+                        required: true,
+                      ),
+                      const SizedBox(height: 16),
+                      CustomTextField(
+                        controller: _descCtrl,
+                        label: 'Descrição',
+                        icon: Icons.description,
+                        maxLines: 3,
+                        required: true,
+                      ),
+                      const SizedBox(height: 16),
+                      const SizedBox(height: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Tecnologias *',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: _selectedTechs.map((tech) {
+                              return Chip(
+                                label: Text(tech),
+                                onDeleted: () {
+                                  setState(() {
+                                    _selectedTechs.remove(tech);
+                                  });
+                                },
+                              );
+                            }).toList(),
+                          ),
+                          const SizedBox(height: 8),
+                          TechAutocompleteField(
+                            controller: _techInputCtrl,
+                            label: 'Adicionar Tecnologia',
+                            icon: Icons.code,
+                            excludeItems: _selectedTechs,
+                            onSelected: (val) {
+                              setState(() {
+                                _selectedTechs.add(val);
+                                _techInputCtrl.clear();
+                              });
+                            },
+                            onFieldSubmitted: (val) {
+                              if (val.isNotEmpty) {
+                                setState(() {
+                                  _selectedTechs.add(val);
+                                  _techInputCtrl.clear();
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      CustomTextField(
+                        controller: _repoCtrl,
+                        label: 'URL do Repositório',
+                        icon: Icons.link,
+                        required: true,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomTextField(
+                              controller: _liveCtrl,
+                              label: 'URL do Deploy',
+                              icon: Icons.web,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: CustomTextField(
+                              controller: _imgCtrl,
+                              label: 'URL da Imagem',
+                              icon: Icons.image,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              TextFormField(
-                controller: _imgCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'URL da Imagem (Opcional)',
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancelar'),
                 ),
-              ),
-            ],
-          ),
+                const SizedBox(width: 16),
+                ElevatedButton.icon(
+                  onPressed: _isLoading ? null : _save,
+                  icon: _isLoading
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Icon(Icons.save),
+                  label: const Text('Salvar'),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
-        ),
-        _isLoading
-            ? const CircularProgressIndicator()
-            : ElevatedButton(onPressed: _save, child: const Text('Salvar')),
-      ],
     );
   }
 }

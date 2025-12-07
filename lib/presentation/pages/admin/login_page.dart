@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:meu_curriculo_flutter/presentation/controllers/auth_controller.dart';
 import 'package:meu_curriculo_flutter/presentation/pages/admin/admin_dashboard_page.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

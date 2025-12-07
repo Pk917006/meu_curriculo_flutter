@@ -47,9 +47,7 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
               return Stack(
                 children: [
                   // Blob 1 (Roxo)
-                  AnimatedPositioned(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeOut,
+                  Positioned(
                     top: -100 - moveY,
                     left: -100 - moveX,
                     child:
@@ -79,9 +77,7 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
                   ),
 
                   // Blob 2 (Azul)
-                  AnimatedPositioned(
-                    duration: const Duration(milliseconds: 600),
-                    curve: Curves.easeOut,
+                  Positioned(
                     bottom: -50 + moveY,
                     right: -50 + moveX,
                     child:

@@ -1,14 +1,20 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'core/theme/app_theme.dart';
+
+// Project imports:
 import 'core/constants/app_constants.dart';
+import 'core/theme/app_theme.dart';
 import 'data/repositories/portfolio_repository.dart';
 import 'data/repositories/supabase_repository.dart';
 import 'presentation/controllers/portfolio_controller.dart';
-import 'presentation/controllers/auth_controller.dart'; // <--- Importe o AuthController
 import 'presentation/pages/home_page.dart';
+
+import 'presentation/controllers/auth_controller.dart'; // <--- Importe o AuthController
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

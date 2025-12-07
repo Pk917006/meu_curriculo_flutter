@@ -1,15 +1,20 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:meu_curriculo_flutter/data/models/certificate_model.dart';
 import 'package:meu_curriculo_flutter/data/models/experience_model.dart';
 import 'package:meu_curriculo_flutter/data/models/project_model.dart';
 import 'package:meu_curriculo_flutter/data/models/skill_model.dart';
-import 'package:provider/provider.dart';
-import '../../controllers/portfolio_controller.dart';
 import '../../controllers/auth_controller.dart';
-import '../../widgets/forms/project_form.dart';
-import '../../widgets/forms/experience_form.dart';
-import '../../widgets/forms/skill_form.dart';
+import '../../controllers/portfolio_controller.dart';
 import '../../widgets/forms/certificate_form.dart';
+import '../../widgets/forms/experience_form.dart';
+import '../../widgets/forms/project_form.dart';
+import '../../widgets/forms/skill_form.dart';
 
 class AdminDashboardPage extends StatefulWidget {
   const AdminDashboardPage({super.key});
@@ -201,9 +206,21 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
                 ),
               ],
             ),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete_outline, color: Colors.red),
-              onPressed: () => _deleteItem('projects', item.id),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.edit_outlined, color: Colors.blue),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (_) => ProjectForm(project: item),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete_outline, color: Colors.red),
+                  onPressed: () => _deleteItem('projects', item.id),
+                ),
+              ],
             ),
           ),
         );
@@ -261,9 +278,21 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
                   ),
               ],
             ),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete_outline, color: Colors.red),
-              onPressed: () => _deleteItem('experiences', item.id),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.edit_outlined, color: Colors.blue),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (_) => ExperienceForm(experience: item),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete_outline, color: Colors.red),
+                  onPressed: () => _deleteItem('experiences', item.id),
+                ),
+              ],
             ),
           ),
         );
@@ -285,6 +314,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
             borderRadius: BorderRadius.circular(12),
           ),
           child: ListTile(
+            contentPadding: const EdgeInsets.all(16),
             leading: CircleAvatar(
               backgroundColor: Colors.purple.shade100,
               child: const Icon(Icons.code, color: Colors.purple),
@@ -294,9 +324,21 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Text("Tipo: ${item.type.name.toUpperCase()}"),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete_outline, color: Colors.red),
-              onPressed: () => _deleteItem('skills', item.id),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.edit_outlined, color: Colors.blue),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (_) => SkillForm(skill: item),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete_outline, color: Colors.red),
+                  onPressed: () => _deleteItem('skills', item.id),
+                ),
+              ],
             ),
           ),
         );
@@ -336,9 +378,21 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
                 Text("Data: ${item.date}"),
               ],
             ),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete_outline, color: Colors.red),
-              onPressed: () => _deleteItem('certificates', item.id),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.edit_outlined, color: Colors.blue),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (_) => CertificateForm(certificate: item),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete_outline, color: Colors.red),
+                  onPressed: () => _deleteItem('certificates', item.id),
+                ),
+              ],
             ),
           ),
         );

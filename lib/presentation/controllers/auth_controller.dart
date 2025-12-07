@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../data/repositories/supabase_repository.dart';
 
 class AuthController extends ChangeNotifier {

@@ -1,8 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:provider/provider.dart';
+
+// Project imports:
 import '../../../data/models/certificate_model.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/portfolio_controller.dart';
+import '../atoms/custom_text_field.dart';
+import '../atoms/tech_autocomplete_field.dart';
 
 class CertificateForm extends StatefulWidget {
   final CertificateModel? certificate;
@@ -104,71 +111,142 @@ class _CertificateFormState extends State<CertificateForm> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(
-        widget.certificate == null ? 'Novo Certificado' : 'Editar Certificado',
-      ),
-      content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                controller: _titleCtrl,
-                decoration: const InputDecoration(labelText: 'Título *'),
-                validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
-              ),
-              TextFormField(
-                controller: _issuerCtrl,
-                decoration: const InputDecoration(labelText: 'Emissor *'),
-                validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
-              ),
-              TextFormField(
-                controller: _dateCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Data de Emissão *',
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 600),
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.certificate == null
+                      ? 'Novo Certificado'
+                      : 'Editar Certificado',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
-              ),
-              TextFormField(
-                controller: _descCtrl,
-                decoration: const InputDecoration(labelText: 'Descrição *'),
-                maxLines: 2,
-                validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
-              ),
-              TextFormField(
-                controller: _credUrlCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'URL da Credencial *',
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close),
                 ),
-                validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
-              ),
-              TextFormField(
-                controller: _langCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Linguagem (Opcional)',
+              ],
+            ),
+            const Divider(),
+            const SizedBox(height: 16),
+            Flexible(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomTextField(
+                              controller: _titleCtrl,
+                              label: 'Título',
+                              icon: Icons.workspace_premium,
+                              required: true,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: CustomTextField(
+                              controller: _issuerCtrl,
+                              label: 'Emissor',
+                              icon: Icons.school,
+                              required: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      CustomTextField(
+                        controller: _dateCtrl,
+                        label: 'Data de Emissão',
+                        icon: Icons.calendar_today,
+                        required: true,
+                      ),
+                      const SizedBox(height: 16),
+                      CustomTextField(
+                        controller: _descCtrl,
+                        label: 'Descrição',
+                        icon: Icons.description,
+                        maxLines: 2,
+                        required: true,
+                      ),
+                      const SizedBox(height: 16),
+                      CustomTextField(
+                        controller: _credUrlCtrl,
+                        label: 'URL da Credencial',
+                        icon: Icons.link,
+                        required: true,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TechAutocompleteField(
+                              controller: _langCtrl,
+                              label: 'Linguagem',
+                              icon: Icons.code,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: TechAutocompleteField(
+                              controller: _frameCtrl,
+                              label: 'Framework',
+                              icon: Icons.layers,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              TextFormField(
-                controller: _frameCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Framework (Opcional)',
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancelar'),
                 ),
-              ),
-            ],
-          ),
+                const SizedBox(width: 16),
+                ElevatedButton.icon(
+                  onPressed: _isLoading ? null : _save,
+                  icon: _isLoading
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Icon(Icons.save),
+                  label: const Text('Salvar'),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
-        ),
-        _isLoading
-            ? const CircularProgressIndicator()
-            : ElevatedButton(onPressed: _save, child: const Text('Salvar')),
-      ],
     );
   }
 }

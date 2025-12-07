@@ -1,22 +1,23 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:meu_curriculo_flutter/presentation/pages/admin/login_page.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
+import 'package:meu_curriculo_flutter/presentation/pages/admin/login_page.dart';
 import '../../../core/constants/app_constants.dart';
 import '../controllers/portfolio_controller.dart';
+import '../widgets/organisms/certificates_section.dart';
 import '../widgets/organisms/experience_section.dart';
 import '../widgets/organisms/glass_header.dart';
 import '../widgets/organisms/hero_section.dart';
 import '../widgets/organisms/projects_section.dart';
 import '../widgets/organisms/skills_section.dart';
-import '../widgets/organisms/certificates_section.dart';
 
 import '../widgets/atoms/background_pattern.dart'; // Importe a textura
 import '../widgets/organisms/intro_overlay.dart'; // Importe o IntroOverlay

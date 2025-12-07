@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../../core/utils/app_utils.dart';
 import '../../../data/models/certificate_model.dart';
 import '../atoms/tech_chip.dart';

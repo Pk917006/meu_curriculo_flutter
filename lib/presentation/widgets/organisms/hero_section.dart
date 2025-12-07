@@ -355,9 +355,9 @@ class HeroSection extends StatelessWidget {
               const SizedBox(height: 40),
 
               // Botões Sociais
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SocialButton(
                     icon: FontAwesomeIcons.linkedin,
                     url: AppStrings.linkedInUrl,

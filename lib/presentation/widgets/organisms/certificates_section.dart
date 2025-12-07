@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../../data/models/certificate_model.dart';
 import '../molecules/certificate_card.dart';
 
