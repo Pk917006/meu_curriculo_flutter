@@ -20,7 +20,7 @@ class _ProjectFormState extends State<ProjectForm> {
   late TextEditingController _repoCtrl;
   late TextEditingController _liveCtrl;
   late TextEditingController _imgCtrl;
-  
+
   List<String> _selectedTechs = [];
 
   bool _isLoading = false;
@@ -171,97 +171,111 @@ class _ProjectFormState extends State<ProjectForm> {
                               return Autocomplete<String>(
                                 optionsBuilder:
                                     (TextEditingValue textEditingValue) {
-                                  if (textEditingValue.text == '') {
-                                    return const Iterable<String>.empty();
-                                  }
-                                  return kTechSuggestions.where((String option) {
-                                    return option.toLowerCase().contains(
+                                      if (textEditingValue.text == '') {
+                                        return const Iterable<String>.empty();
+                                      }
+                                      return kTechSuggestions.where((
+                                        String option,
+                                      ) {
+                                        return option.toLowerCase().contains(
                                               textEditingValue.text
                                                   .toLowerCase(),
                                             ) &&
-                                        !_selectedTechs.contains(option);
-                                  });
-                                },
+                                            !_selectedTechs.contains(option);
+                                      });
+                                    },
                                 onSelected: (String selection) {
                                   setState(() {
                                     _selectedTechs.add(selection);
                                   });
                                 },
-                                fieldViewBuilder: (
-                                  BuildContext context,
-                                  TextEditingController
+                                fieldViewBuilder:
+                                    (
+                                      BuildContext context,
+                                      TextEditingController
                                       fieldTextEditingController,
-                                  FocusNode fieldFocusNode,
-                                  VoidCallback onFieldSubmitted,
-                                ) {
-                                  return TextFormField(
-                                    controller: fieldTextEditingController,
-                                    focusNode: fieldFocusNode,
-                                    decoration: InputDecoration(
-                                      labelText: 'Adicionar Tecnologia',
-                                      prefixIcon: const Icon(Icons.code),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      filled: true,
-                                      fillColor: Colors.grey.shade50,
-                                      suffixIcon: IconButton(
-                                        icon: const Icon(Icons.add),
-                                        onPressed: () {
-                                          if (fieldTextEditingController
-                                              .text.isNotEmpty) {
-                                            setState(() {
-                                              _selectedTechs.add(
+                                      FocusNode fieldFocusNode,
+                                      VoidCallback onFieldSubmitted,
+                                    ) {
+                                      return TextFormField(
+                                        controller: fieldTextEditingController,
+                                        focusNode: fieldFocusNode,
+                                        decoration: InputDecoration(
+                                          labelText: 'Adicionar Tecnologia',
+                                          prefixIcon: const Icon(Icons.code),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: Colors.grey.shade50,
+                                          suffixIcon: IconButton(
+                                            icon: const Icon(Icons.add),
+                                            onPressed: () {
+                                              if (fieldTextEditingController
+                                                  .text
+                                                  .isNotEmpty) {
+                                                setState(() {
+                                                  _selectedTechs.add(
+                                                    fieldTextEditingController
+                                                        .text,
+                                                  );
                                                   fieldTextEditingController
-                                                      .text);
+                                                      .clear();
+                                                });
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        onFieldSubmitted: (value) {
+                                          if (value.isNotEmpty) {
+                                            setState(() {
+                                              _selectedTechs.add(value);
                                               fieldTextEditingController
                                                   .clear();
                                             });
                                           }
                                         },
-                                      ),
-                                    ),
-                                    onFieldSubmitted: (value) {
-                                      if (value.isNotEmpty) {
-                                        setState(() {
-                                          _selectedTechs.add(value);
-                                          fieldTextEditingController.clear();
-                                        });
-                                      }
+                                      );
                                     },
-                                  );
-                                },
-                                optionsViewBuilder: (
-                                  BuildContext context,
-                                  AutocompleteOnSelected<String> onSelected,
-                                  Iterable<String> options,
-                                ) {
-                                  return Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Material(
-                                      elevation: 4.0,
-                                      child: SizedBox(
-                                        width: constraints.maxWidth,
-                                        child: ListView.builder(
-                                          padding: EdgeInsets.zero,
-                                          shrinkWrap: true,
-                                          itemCount: options.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            final String option =
-                                                options.elementAt(index);
-                                            return ListTile(
-                                              title: Text(option),
-                                              onTap: () {
-                                                onSelected(option);
-                                              },
-                                            );
-                                          },
+                                optionsViewBuilder:
+                                    (
+                                      BuildContext context,
+                                      AutocompleteOnSelected<String> onSelected,
+                                      Iterable<String> options,
+                                    ) {
+                                      return Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Material(
+                                          elevation: 4.0,
+                                          child: SizedBox(
+                                            width: constraints.maxWidth,
+                                            child: ListView.builder(
+                                              padding: EdgeInsets.zero,
+                                              shrinkWrap: true,
+                                              itemCount: options.length,
+                                              itemBuilder:
+                                                  (
+                                                    BuildContext context,
+                                                    int index,
+                                                  ) {
+                                                    final String option =
+                                                        options.elementAt(
+                                                          index,
+                                                        );
+                                                    return ListTile(
+                                                      title: Text(option),
+                                                      onTap: () {
+                                                        onSelected(option);
+                                                      },
+                                                    );
+                                                  },
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  );
-                                },
+                                      );
+                                    },
                               );
                             },
                           ),
