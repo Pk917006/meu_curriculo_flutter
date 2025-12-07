@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../core/constants/app_constants.dart';
 
 class IntroOverlay extends StatefulWidget {
   final bool isLoading;
@@ -119,7 +117,9 @@ class _IntroOverlayState extends State<IntroOverlay> {
                 // Grid decorativo
                 Positioned.fill(
                   child: CustomPaint(
-                    painter: GridPainter(color: primaryColor.withOpacity(0.1)),
+                    painter: GridPainter(
+                      color: primaryColor.withValues(alpha: 0.1),
+                    ),
                   ),
                 ),
                 // Conteúdo Central (Parte de Cima)
@@ -185,7 +185,9 @@ class _IntroOverlayState extends State<IntroOverlay> {
                 // Grid decorativo
                 Positioned.fill(
                   child: CustomPaint(
-                    painter: GridPainter(color: primaryColor.withOpacity(0.1)),
+                    painter: GridPainter(
+                      color: primaryColor.withValues(alpha: 0.1),
+                    ),
                   ),
                 ),
                 // Conteúdo Central (Parte de Baixo)
@@ -202,7 +204,9 @@ class _IntroOverlayState extends State<IntroOverlay> {
                             SizedBox(
                               width: 200,
                               child: LinearProgressIndicator(
-                                backgroundColor: primaryColor.withOpacity(0.2),
+                                backgroundColor: primaryColor.withValues(
+                                  alpha: 0.2,
+                                ),
                                 color: primaryColor,
                               ),
                             )
@@ -216,7 +220,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
                                 letterSpacing: 2,
                                 shadows: [
                                   BoxShadow(
-                                    color: Colors.green.withOpacity(0.8),
+                                    color: Colors.green.withValues(alpha: 0.8),
                                     blurRadius: 20,
                                   ),
                                 ],
@@ -241,7 +245,9 @@ class _IntroOverlayState extends State<IntroOverlay> {
                                     "> $log",
                                     style: TextStyle(
                                       fontFamily: 'Courier',
-                                      color: primaryColor.withOpacity(0.7),
+                                      color: primaryColor.withValues(
+                                        alpha: 0.7,
+                                      ),
                                       fontSize: 12,
                                     ),
                                   ),
@@ -267,7 +273,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
             child: Container(
               height: 2,
               width: double.infinity,
-              color: primaryColor.withOpacity(0.5),
+              color: primaryColor.withValues(alpha: 0.5),
             ).animate().scaleX(duration: 1.seconds, curve: Curves.easeOut),
           ),
       ],

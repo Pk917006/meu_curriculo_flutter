@@ -63,7 +63,7 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
                                 height: 400,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.purple.withOpacity(0.15),
+                                  color: Colors.purple.withValues(alpha: 0.15),
                                 ),
                               ),
                             )
@@ -95,7 +95,7 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
                                 height: 300,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.blue.withOpacity(0.15),
+                                  color: Colors.blue.withValues(alpha: 0.15),
                                 ),
                               ),
                             )
@@ -119,8 +119,8 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
             child: CustomPaint(
               painter: DotGridPainter(
                 color: isDark
-                    ? Colors.white.withOpacity(0.05)
-                    : Colors.black.withOpacity(0.03),
+                    ? Colors.white.withValues(alpha: 0.05)
+                    : Colors.black.withValues(alpha: 0.03),
                 spacing: 40,
               ),
             ),

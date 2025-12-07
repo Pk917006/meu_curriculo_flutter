@@ -41,10 +41,11 @@ class ProjectsSection extends StatelessWidget {
           builder: (context, constraints) {
             // Lógica responsiva para o Grid
             int crossAxisCount = 1;
-            if (constraints.maxWidth > 1100)
+            if (constraints.maxWidth > 1100) {
               crossAxisCount = 3;
-            else if (constraints.maxWidth > 700)
+            } else if (constraints.maxWidth > 700) {
               crossAxisCount = 2;
+            }
 
             return GridView.builder(
               shrinkWrap: true,

@@ -39,7 +39,7 @@ class ExperienceSection extends StatelessWidget {
                     width: 2,
                     color: Theme.of(
                       context,
-                    ).colorScheme.primary.withOpacity(0.3),
+                    ).colorScheme.primary.withValues(alpha: 0.3),
                   ).animate().scaleY(
                     begin: 0,
                     end: 1,

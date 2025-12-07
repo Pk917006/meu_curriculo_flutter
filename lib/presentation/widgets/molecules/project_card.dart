@@ -71,10 +71,10 @@ class _ProjectCardState extends State<ProjectCard> {
                 boxShadow: [
                   BoxShadow(
                     color: hovered
-                        ? const Color(AppColors.primary).withOpacity(0.3)
+                        ? const Color(AppColors.primary).withValues(alpha: 0.3)
                         : (isDark
-                              ? Colors.white.withOpacity(0.05)
-                              : Colors.black.withOpacity(0.05)),
+                              ? Colors.white.withValues(alpha: 0.05)
+                              : Colors.black.withValues(alpha: 0.05)),
                     blurRadius: hovered ? 30 : 10,
                     offset: hovered ? const Offset(0, 15) : const Offset(0, 5),
                   ),
@@ -100,7 +100,9 @@ class _ProjectCardState extends State<ProjectCard> {
                               FontAwesomeIcons.arrowUpRightFromSquare,
                               size: 16,
                               color:
-                                  theme.iconTheme.color?.withOpacity(0.5) ??
+                                  theme.iconTheme.color?.withValues(
+                                    alpha: 0.5,
+                                  ) ??
                                   Colors.grey,
                             ),
                           ],
@@ -120,7 +122,7 @@ class _ProjectCardState extends State<ProjectCard> {
                           style: theme.textTheme.bodyMedium?.copyWith(
                             height: 1.5,
                             color: theme.textTheme.bodyMedium?.color
-                                ?.withOpacity(0.8),
+                                ?.withValues(alpha: 0.8),
                           ),
                         ),
                         const Spacer(),
@@ -144,7 +146,9 @@ class _ProjectCardState extends State<ProjectCard> {
                           borderRadius: BorderRadius.circular(20),
                           gradient: LinearGradient(
                             colors: [
-                              Colors.white.withOpacity(isDark ? 0.1 : 0.4),
+                              Colors.white.withValues(
+                                alpha: isDark ? 0.1 : 0.4,
+                              ),
                               Colors.transparent,
                             ],
                             begin: Alignment.topLeft,

@@ -32,7 +32,9 @@ class SocialButton extends StatelessWidget {
           icon: FaIcon(icon, size: 28),
           style: IconButton.styleFrom(
             foregroundColor: color ?? Theme.of(context).colorScheme.primary,
-            hoverColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+            hoverColor: Theme.of(
+              context,
+            ).colorScheme.primary.withValues(alpha: 0.1),
           ),
         )
         .animate(onPlay: (controller) => controller.repeat(reverse: true))

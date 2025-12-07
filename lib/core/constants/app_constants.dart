@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
 
 class AppAssets {
   // Imagens (baseado nos arquivos que você subiu)

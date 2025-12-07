@@ -9,7 +9,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../core/constants/app_constants.dart';
 import '../../controllers/portfolio_controller.dart';
 
 class GlassHeader extends StatelessWidget {
@@ -37,13 +36,13 @@ class GlassHeader extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: isDark
-                        ? Colors.black.withOpacity(0.6)
-                        : Colors.white.withOpacity(0.7),
+                        ? Colors.black.withValues(alpha: 0.6)
+                        : Colors.white.withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(
                       color: isDark
-                          ? Colors.white.withOpacity(0.1)
-                          : Colors.white.withOpacity(0.5),
+                          ? Colors.white.withValues(alpha: 0.1)
+                          : Colors.white.withValues(alpha: 0.5),
                     ),
                   ),
                   child: Row(
@@ -199,7 +198,7 @@ class _HeaderItemState extends State<_HeaderItem> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: isHovered
-                ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+                ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(20),
           ),

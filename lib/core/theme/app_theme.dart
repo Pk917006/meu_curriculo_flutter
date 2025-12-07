@@ -46,7 +46,6 @@ class AppTheme {
         seedColor: const Color(AppColors.primary),
         brightness: brightness,
         surface: surface,
-        background: background,
       ),
       textTheme: GoogleFonts.poppinsTextTheme().apply(
         bodyColor: textColor,
@@ -58,8 +57,8 @@ class AppTheme {
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
             color: brightness == Brightness.dark
-                ? Colors.white.withOpacity(0.1)
-                : Colors.black.withOpacity(0.05),
+                ? Colors.white.withValues(alpha: 0.1)
+                : Colors.black.withValues(alpha: 0.05),
           ),
         ),
         color: surface,
@@ -72,7 +71,7 @@ class AppTheme {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           elevation: 4,
-          shadowColor: const Color(AppColors.primary).withOpacity(0.4),
+          shadowColor: const Color(AppColors.primary).withValues(alpha: 0.4),
         ),
       ),
       iconTheme: IconThemeData(color: textColor),

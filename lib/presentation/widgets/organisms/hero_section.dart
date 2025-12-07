@@ -161,7 +161,9 @@ class HeroSection extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(AppColors.primary).withOpacity(0.4),
+                        color: const Color(
+                          AppColors.primary,
+                        ).withValues(alpha: 0.4),
                         blurRadius: 30,
                         spreadRadius: 10,
                       ),
@@ -194,14 +196,18 @@ class HeroSection extends StatelessWidget {
                   .then()
                   .shimmer(
                     duration: 2.seconds,
-                    color: const Color(AppColors.primary).withOpacity(0.3),
+                    color: const Color(
+                      AppColors.primary,
+                    ).withValues(alpha: 0.3),
                   )
                   .animate(
                     onPlay: (controller) =>
                         controller.repeat(period: 5.seconds),
                   )
                   .tint(
-                    color: const Color(AppColors.primary).withOpacity(0.5),
+                    color: const Color(
+                      AppColors.primary,
+                    ).withValues(alpha: 0.5),
                     duration: 200.ms,
                   )
                   .shake(hz: 3, curve: Curves.easeInOut, duration: 300.ms),
@@ -234,7 +240,7 @@ class HeroSection extends StatelessWidget {
                     height: 1.6,
                     color: Theme.of(
                       context,
-                    ).textTheme.bodyMedium?.color?.withOpacity(0.8),
+                    ).textTheme.bodyMedium?.color?.withValues(alpha: 0.8),
                   ),
                 ),
               ).animate().fadeIn(delay: 500.ms),
