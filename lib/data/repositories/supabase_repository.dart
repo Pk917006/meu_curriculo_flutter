@@ -4,6 +4,7 @@ import '../models/project_model.dart';
 import '../models/experience_model.dart';
 import '../models/skill_model.dart';
 import '../models/certificate_model.dart';
+import 'dart:developer';
 
 class SupabaseRepository implements IPortfolioRepository {
   final SupabaseClient _client = Supabase.instance.client;
@@ -23,7 +24,7 @@ class SupabaseRepository implements IPortfolioRepository {
           .toList();
     } catch (e) {
       // Em caso de erro, retorna lista vazia ou lança exceção
-      print('Erro ao buscar projetos: $e');
+      log('Erro ao buscar projetos: $e');
       return [];
     }
   }
@@ -42,7 +43,7 @@ class SupabaseRepository implements IPortfolioRepository {
           ) // Certifique-se que ExperienceModel tem fromMap
           .toList();
     } catch (e) {
-      print('Erro ao buscar experiências: $e');
+      log('Erro ao buscar experiências: $e');
       return [];
     }
   }
@@ -61,7 +62,7 @@ class SupabaseRepository implements IPortfolioRepository {
           ) // Certifique-se que SkillModel tem fromMap
           .toList();
     } catch (e) {
-      print('Erro ao buscar skills: $e');
+      log('Erro ao buscar skills: $e');
       return [];
     }
   }
@@ -79,7 +80,7 @@ class SupabaseRepository implements IPortfolioRepository {
           .toList();
     } catch (e) {
       // Log de erro para ajudar no debug
-      print('Erro ao buscar certificados: $e');
+      log('Erro ao buscar certificados: $e');
       return [];
     }
   }

@@ -36,12 +36,12 @@ class _ExperienceCardState extends State<ExperienceCard> {
               (isDark ? const Color(0xFF1E1E1E) : Colors.white),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isDark ? Colors.white10 : Colors.grey.withOpacity(0.1),
+            color: isDark ? Colors.white10 : Colors.grey.withValues(alpha: 0.1),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(_isHovered ? 0.15 : 0.05),
+              color: Colors.black.withValues(alpha: _isHovered ? 0.15 : 0.05),
               blurRadius: _isHovered ? 20 : 10,
               offset: _isHovered ? const Offset(0, 8) : const Offset(0, 4),
             ),
@@ -97,7 +97,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
             Text(
               widget.experience.description,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurface.withOpacity(0.8),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
                 height: 1.5,
               ),
             ),
