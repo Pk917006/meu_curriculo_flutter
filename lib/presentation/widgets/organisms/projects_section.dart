@@ -26,6 +26,7 @@ class ProjectsSection extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.2,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             TextButton.icon(
