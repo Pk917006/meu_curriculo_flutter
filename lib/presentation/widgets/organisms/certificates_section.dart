@@ -38,7 +38,7 @@ class CertificatesSection extends StatelessWidget {
                 crossAxisSpacing: 24,
                 mainAxisSpacing: 24,
                 childAspectRatio: 1.5,
-                mainAxisExtent: 200,
+                mainAxisExtent: 280, // Aumentado de 200 para 280 para evitar overflow
               ),
               itemCount: certificates.length,
               itemBuilder: (context, index) {
