@@ -6,6 +6,10 @@ import 'package:meu_curriculo_flutter/data/models/skill_model.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/portfolio_controller.dart';
 import '../../controllers/auth_controller.dart';
+import '../../widgets/forms/project_form.dart';
+import '../../widgets/forms/experience_form.dart';
+import '../../widgets/forms/skill_form.dart';
+import '../../widgets/forms/certificate_form.dart';
 
 class AdminDashboardPage extends StatefulWidget {
   const AdminDashboardPage({super.key});
@@ -74,11 +78,26 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
   }
 
   void _showAddDialog(BuildContext context, int index) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Funcionalidade de Adicionar/Editar em breve!'),
-      ),
-    );
+    Widget? dialog;
+
+    switch (index) {
+      case 0:
+        dialog = const ProjectForm();
+        break;
+      case 1:
+        dialog = const ExperienceForm();
+        break;
+      case 2:
+        dialog = const SkillForm();
+        break;
+      case 3:
+        dialog = const CertificateForm();
+        break;
+    }
+
+    if (dialog != null) {
+      showDialog(context: context, builder: (_) => dialog!);
+    }
   }
 
   @override
