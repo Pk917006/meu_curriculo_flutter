@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/tech_suggestions.dart';
 import '../../../data/models/project_model.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/portfolio_controller.dart';
+import '../atoms/custom_text_field.dart';
+import '../atoms/tech_autocomplete_field.dart';
 
 class ProjectForm extends StatefulWidget {
   final ProjectModel? project;
@@ -20,9 +21,9 @@ class _ProjectFormState extends State<ProjectForm> {
   late TextEditingController _repoCtrl;
   late TextEditingController _liveCtrl;
   late TextEditingController _imgCtrl;
+  final TextEditingController _techInputCtrl = TextEditingController();
 
   List<String> _selectedTechs = [];
-
   bool _isLoading = false;
 
   @override
@@ -43,6 +44,7 @@ class _ProjectFormState extends State<ProjectForm> {
     _repoCtrl.dispose();
     _liveCtrl.dispose();
     _imgCtrl.dispose();
+    _techInputCtrl.dispose();
     super.dispose();
   }
 
@@ -127,14 +129,14 @@ class _ProjectFormState extends State<ProjectForm> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      _buildTextField(
+                      CustomTextField(
                         controller: _titleCtrl,
                         label: 'Título',
                         icon: Icons.title,
                         required: true,
                       ),
                       const SizedBox(height: 16),
-                      _buildTextField(
+                      CustomTextField(
                         controller: _descCtrl,
                         label: 'Descrição',
                         icon: Icons.description,
@@ -166,123 +168,30 @@ class _ProjectFormState extends State<ProjectForm> {
                             }).toList(),
                           ),
                           const SizedBox(height: 8),
-                          LayoutBuilder(
-                            builder: (context, constraints) {
-                              return Autocomplete<String>(
-                                optionsBuilder:
-                                    (TextEditingValue textEditingValue) {
-                                      if (textEditingValue.text == '') {
-                                        return const Iterable<String>.empty();
-                                      }
-                                      return kTechSuggestions.where((
-                                        String option,
-                                      ) {
-                                        return option.toLowerCase().contains(
-                                              textEditingValue.text
-                                                  .toLowerCase(),
-                                            ) &&
-                                            !_selectedTechs.contains(option);
-                                      });
-                                    },
-                                onSelected: (String selection) {
-                                  setState(() {
-                                    _selectedTechs.add(selection);
-                                  });
-                                },
-                                fieldViewBuilder:
-                                    (
-                                      BuildContext context,
-                                      TextEditingController
-                                      fieldTextEditingController,
-                                      FocusNode fieldFocusNode,
-                                      VoidCallback onFieldSubmitted,
-                                    ) {
-                                      return TextFormField(
-                                        controller: fieldTextEditingController,
-                                        focusNode: fieldFocusNode,
-                                        decoration: InputDecoration(
-                                          labelText: 'Adicionar Tecnologia',
-                                          prefixIcon: const Icon(Icons.code),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              8,
-                                            ),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.grey.shade50,
-                                          suffixIcon: IconButton(
-                                            icon: const Icon(Icons.add),
-                                            onPressed: () {
-                                              if (fieldTextEditingController
-                                                  .text
-                                                  .isNotEmpty) {
-                                                setState(() {
-                                                  _selectedTechs.add(
-                                                    fieldTextEditingController
-                                                        .text,
-                                                  );
-                                                  fieldTextEditingController
-                                                      .clear();
-                                                });
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                        onFieldSubmitted: (value) {
-                                          if (value.isNotEmpty) {
-                                            setState(() {
-                                              _selectedTechs.add(value);
-                                              fieldTextEditingController
-                                                  .clear();
-                                            });
-                                          }
-                                        },
-                                      );
-                                    },
-                                optionsViewBuilder:
-                                    (
-                                      BuildContext context,
-                                      AutocompleteOnSelected<String> onSelected,
-                                      Iterable<String> options,
-                                    ) {
-                                      return Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Material(
-                                          elevation: 4.0,
-                                          child: SizedBox(
-                                            width: constraints.maxWidth,
-                                            child: ListView.builder(
-                                              padding: EdgeInsets.zero,
-                                              shrinkWrap: true,
-                                              itemCount: options.length,
-                                              itemBuilder:
-                                                  (
-                                                    BuildContext context,
-                                                    int index,
-                                                  ) {
-                                                    final String option =
-                                                        options.elementAt(
-                                                          index,
-                                                        );
-                                                    return ListTile(
-                                                      title: Text(option),
-                                                      onTap: () {
-                                                        onSelected(option);
-                                                      },
-                                                    );
-                                                  },
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                              );
+                          TechAutocompleteField(
+                            controller: _techInputCtrl,
+                            label: 'Adicionar Tecnologia',
+                            icon: Icons.code,
+                            excludeItems: _selectedTechs,
+                            onSelected: (val) {
+                              setState(() {
+                                _selectedTechs.add(val);
+                                _techInputCtrl.clear();
+                              });
+                            },
+                            onFieldSubmitted: (val) {
+                              if (val.isNotEmpty) {
+                                setState(() {
+                                  _selectedTechs.add(val);
+                                  _techInputCtrl.clear();
+                                });
+                              }
                             },
                           ),
                         ],
                       ),
                       const SizedBox(height: 16),
-                      _buildTextField(
+                      CustomTextField(
                         controller: _repoCtrl,
                         label: 'URL do Repositório',
                         icon: Icons.link,
@@ -292,7 +201,7 @@ class _ProjectFormState extends State<ProjectForm> {
                       Row(
                         children: [
                           Expanded(
-                            child: _buildTextField(
+                            child: CustomTextField(
                               controller: _liveCtrl,
                               label: 'URL do Deploy',
                               icon: Icons.web,
@@ -300,7 +209,7 @@ class _ProjectFormState extends State<ProjectForm> {
                           ),
                           const SizedBox(width: 16),
                           Expanded(
-                            child: _buildTextField(
+                            child: CustomTextField(
                               controller: _imgCtrl,
                               label: 'URL da Imagem',
                               icon: Icons.image,
@@ -347,31 +256,6 @@ class _ProjectFormState extends State<ProjectForm> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    String? hint,
-    int maxLines = 1,
-    bool required = false,
-  }) {
-    return TextFormField(
-      controller: controller,
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        labelText: required ? '$label *' : label,
-        hintText: hint,
-        prefixIcon: Icon(icon),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        filled: true,
-        fillColor: Colors.grey.shade50,
-      ),
-      validator: required
-          ? (v) => v?.isEmpty == true ? 'Campo obrigatório' : null
-          : null,
     );
   }
 }

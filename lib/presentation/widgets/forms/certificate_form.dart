@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/tech_suggestions.dart';
 import '../../../data/models/certificate_model.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/portfolio_controller.dart';
+import '../atoms/custom_text_field.dart';
+import '../atoms/tech_autocomplete_field.dart';
 
 class CertificateForm extends StatefulWidget {
   final CertificateModel? certificate;
@@ -142,7 +143,7 @@ class _CertificateFormState extends State<CertificateForm> {
                       Row(
                         children: [
                           Expanded(
-                            child: _buildTextField(
+                            child: CustomTextField(
                               controller: _titleCtrl,
                               label: 'Título',
                               icon: Icons.workspace_premium,
@@ -151,7 +152,7 @@ class _CertificateFormState extends State<CertificateForm> {
                           ),
                           const SizedBox(width: 16),
                           Expanded(
-                            child: _buildTextField(
+                            child: CustomTextField(
                               controller: _issuerCtrl,
                               label: 'Emissor',
                               icon: Icons.school,
@@ -161,14 +162,14 @@ class _CertificateFormState extends State<CertificateForm> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      _buildTextField(
+                      CustomTextField(
                         controller: _dateCtrl,
                         label: 'Data de Emissão',
                         icon: Icons.calendar_today,
                         required: true,
                       ),
                       const SizedBox(height: 16),
-                      _buildTextField(
+                      CustomTextField(
                         controller: _descCtrl,
                         label: 'Descrição',
                         icon: Icons.description,
@@ -176,7 +177,7 @@ class _CertificateFormState extends State<CertificateForm> {
                         required: true,
                       ),
                       const SizedBox(height: 16),
-                      _buildTextField(
+                      CustomTextField(
                         controller: _credUrlCtrl,
                         label: 'URL da Credencial',
                         icon: Icons.link,
@@ -186,188 +187,18 @@ class _CertificateFormState extends State<CertificateForm> {
                       Row(
                         children: [
                           Expanded(
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                return Autocomplete<String>(
-                                  initialValue: TextEditingValue(
-                                    text: _langCtrl.text,
-                                  ),
-                                  optionsBuilder:
-                                      (TextEditingValue textEditingValue) {
-                                        if (textEditingValue.text == '') {
-                                          return const Iterable<String>.empty();
-                                        }
-                                        return kTechSuggestions.where((
-                                          String option,
-                                        ) {
-                                          return option.toLowerCase().contains(
-                                            textEditingValue.text.toLowerCase(),
-                                          );
-                                        });
-                                      },
-                                  onSelected: (String selection) {
-                                    _langCtrl.text = selection;
-                                  },
-                                  fieldViewBuilder:
-                                      (
-                                        BuildContext context,
-                                        TextEditingController
-                                        fieldTextEditingController,
-                                        FocusNode fieldFocusNode,
-                                        VoidCallback onFieldSubmitted,
-                                      ) {
-                                        return TextFormField(
-                                          controller:
-                                              fieldTextEditingController,
-                                          focusNode: fieldFocusNode,
-                                          decoration: InputDecoration(
-                                            labelText: 'Linguagem',
-                                            prefixIcon: const Icon(Icons.code),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            filled: true,
-                                            fillColor: Colors.grey.shade50,
-                                          ),
-                                          onChanged: (val) =>
-                                              _langCtrl.text = val,
-                                        );
-                                      },
-                                  optionsViewBuilder:
-                                      (
-                                        BuildContext context,
-                                        AutocompleteOnSelected<String>
-                                        onSelected,
-                                        Iterable<String> options,
-                                      ) {
-                                        return Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Material(
-                                            elevation: 4.0,
-                                            child: SizedBox(
-                                              width: constraints.maxWidth,
-                                              child: ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                shrinkWrap: true,
-                                                itemCount: options.length,
-                                                itemBuilder:
-                                                    (
-                                                      BuildContext context,
-                                                      int index,
-                                                    ) {
-                                                      final String option =
-                                                          options.elementAt(
-                                                            index,
-                                                          );
-                                                      return ListTile(
-                                                        title: Text(option),
-                                                        onTap: () {
-                                                          onSelected(option);
-                                                        },
-                                                      );
-                                                    },
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                );
-                              },
+                            child: TechAutocompleteField(
+                              controller: _langCtrl,
+                              label: 'Linguagem',
+                              icon: Icons.code,
                             ),
                           ),
                           const SizedBox(width: 16),
                           Expanded(
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                return Autocomplete<String>(
-                                  initialValue: TextEditingValue(
-                                    text: _frameCtrl.text,
-                                  ),
-                                  optionsBuilder:
-                                      (TextEditingValue textEditingValue) {
-                                        if (textEditingValue.text == '') {
-                                          return const Iterable<String>.empty();
-                                        }
-                                        return kTechSuggestions.where((
-                                          String option,
-                                        ) {
-                                          return option.toLowerCase().contains(
-                                            textEditingValue.text.toLowerCase(),
-                                          );
-                                        });
-                                      },
-                                  onSelected: (String selection) {
-                                    _frameCtrl.text = selection;
-                                  },
-                                  fieldViewBuilder:
-                                      (
-                                        BuildContext context,
-                                        TextEditingController
-                                        fieldTextEditingController,
-                                        FocusNode fieldFocusNode,
-                                        VoidCallback onFieldSubmitted,
-                                      ) {
-                                        return TextFormField(
-                                          controller:
-                                              fieldTextEditingController,
-                                          focusNode: fieldFocusNode,
-                                          decoration: InputDecoration(
-                                            labelText: 'Framework',
-                                            prefixIcon: const Icon(
-                                              Icons.layers,
-                                            ),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            filled: true,
-                                            fillColor: Colors.grey.shade50,
-                                          ),
-                                          onChanged: (val) =>
-                                              _frameCtrl.text = val,
-                                        );
-                                      },
-                                  optionsViewBuilder:
-                                      (
-                                        BuildContext context,
-                                        AutocompleteOnSelected<String>
-                                        onSelected,
-                                        Iterable<String> options,
-                                      ) {
-                                        return Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Material(
-                                            elevation: 4.0,
-                                            child: SizedBox(
-                                              width: constraints.maxWidth,
-                                              child: ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                shrinkWrap: true,
-                                                itemCount: options.length,
-                                                itemBuilder:
-                                                    (
-                                                      BuildContext context,
-                                                      int index,
-                                                    ) {
-                                                      final String option =
-                                                          options.elementAt(
-                                                            index,
-                                                          );
-                                                      return ListTile(
-                                                        title: Text(option),
-                                                        onTap: () {
-                                                          onSelected(option);
-                                                        },
-                                                      );
-                                                    },
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                );
-                              },
+                            child: TechAutocompleteField(
+                              controller: _frameCtrl,
+                              label: 'Framework',
+                              icon: Icons.layers,
                             ),
                           ),
                         ],
@@ -411,31 +242,6 @@ class _CertificateFormState extends State<CertificateForm> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    String? hint,
-    int maxLines = 1,
-    bool required = false,
-  }) {
-    return TextFormField(
-      controller: controller,
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        labelText: required ? '$label *' : label,
-        hintText: hint,
-        prefixIcon: Icon(icon),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        filled: true,
-        fillColor: Colors.grey.shade50,
-      ),
-      validator: required
-          ? (v) => v?.isEmpty == true ? 'Campo obrigatório' : null
-          : null,
     );
   }
 }
