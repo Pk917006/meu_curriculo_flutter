@@ -1,5 +1,8 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:meu_curriculo_flutter/presentation/pages/admin/login_page.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -27,6 +30,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _showIntro = true;
+  int _secretTapCount = 0;
+  Timer? _resetTimer;
 
   @override
   void initState() {
@@ -34,6 +39,35 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PortfolioController>().loadAllData();
     });
+  }
+
+  void _handleEasterEgg() {
+    setState(() => _secretTapCount++);
+
+    // Cancela o timer anterior se houver
+    _resetTimer?.cancel();
+
+    // Se o usuário parar de clicar por 1.5 segundos, zera a contagem
+    _resetTimer = Timer(const Duration(milliseconds: 1500), () {
+      setState(() => _secretTapCount = 0);
+    });
+
+    // Se atingir 10 cliques
+    if (_secretTapCount >= 10) {
+      _secretTapCount = 0;
+      _resetTimer?.cancel();
+
+      // Feedback visual (opcional)
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('🕵️ Modo Admin Detectado!')),
+      );
+
+      // Navega para o Login
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    }
   }
 
   @override
@@ -115,21 +149,32 @@ class _HomePageState extends State<HomePage> {
                                 const SizedBox(height: 150),
 
                                 // Footer com Copyright
-                                Column(
-                                  children: [
-                                    const Text(
-                                      "Feito com Flutter 3.27 & 💙",
-                                      style: TextStyle(color: Colors.grey),
+                                GestureDetector(
+                                  onTap:
+                                      _handleEasterEgg, // Chama a função aqui
+                                  behavior: HitTestBehavior
+                                      .translucent, // Garante que o toque funcione bem
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(
+                                      8.0,
+                                    ), // Aumenta a área de toque
+                                    child: Column(
+                                      children: [
+                                        const Text(
+                                          "Feito com Flutter 3.27 & 💙",
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          "© ${DateTime.now().year} Franklyn Roberto",
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      "© ${DateTime.now().year} Franklyn Roberto",
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ],
                             ),

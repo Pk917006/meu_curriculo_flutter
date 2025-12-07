@@ -47,3 +47,26 @@ ALTER TABLE skills ADD COLUMN icon_url text;
 
 alter table certificates enable row level security;
 create policy "Public Access" on certificates for select using (true);
+
+
+
+
+-- Tabela PROJECTS
+create policy "Admin Insert Projects" on projects for insert to authenticated with check (true);
+create policy "Admin Update Projects" on projects for update to authenticated using (true);
+create policy "Admin Delete Projects" on projects for delete to authenticated using (true);
+
+-- Tabela EXPERIENCES
+create policy "Admin Insert Exp" on experiences for insert to authenticated with check (true);
+create policy "Admin Update Exp" on experiences for update to authenticated using (true);
+create policy "Admin Delete Exp" on experiences for delete to authenticated using (true);
+
+-- Tabela SKILLS
+create policy "Admin Insert Skills" on skills for insert to authenticated with check (true);
+create policy "Admin Update Skills" on skills for update to authenticated using (true);
+create policy "Admin Delete Skills" on skills for delete to authenticated using (true);
+
+-- Tabela CERTIFICATES
+create policy "Admin Insert Certs" on certificates for insert to authenticated with check (true);
+create policy "Admin Update Certs" on certificates for update to authenticated using (true);
+create policy "Admin Delete Certs" on certificates for delete to authenticated using (true);

@@ -9,6 +9,47 @@ import 'dart:developer';
 class SupabaseRepository implements IPortfolioRepository {
   final SupabaseClient _client = Supabase.instance.client;
 
+  // --- AUTH ---
+  Future<bool> signIn(String email, String password) async {
+    try {
+      final response = await _client.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+      return response.user != null;
+    } catch (e) {
+      log('Erro login: $e');
+      return false;
+    }
+  }
+
+  Future<void> signOut() async {
+    await _client.auth.signOut();
+  }
+
+  bool get isAuthenticated => _client.auth.currentUser != null;
+
+  // --- CRUD GENÉRICO (Para evitar repetição) ---
+
+  // Create
+  Future<void> createItem(String table, Map<String, dynamic> data) async {
+    await _client.from(table).insert(data);
+  }
+
+  // Update
+  Future<void> updateItem(
+    String table,
+    int id,
+    Map<String, dynamic> data,
+  ) async {
+    await _client.from(table).update(data).eq('id', id);
+  }
+
+  // Delete
+  Future<void> deleteItem(String table, int id) async {
+    await _client.from(table).delete().eq('id', id);
+  }
+
   @override
   Future<List<ProjectModel>> getProjects() async {
     try {
