@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
   bool _isLoading = false;
+  bool _obscurePassword = true;
 
   void _submit() async {
     setState(() => _isLoading = true);
@@ -62,10 +63,22 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 16),
               TextField(
                 controller: _passCtrl,
-                obscureText: true,
-                decoration: const InputDecoration(
+                obscureText: _obscurePassword,
+                decoration: InputDecoration(
                   labelText: 'Senha',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 24),

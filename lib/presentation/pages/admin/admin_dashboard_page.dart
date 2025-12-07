@@ -139,7 +139,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final item = items[index];
         return Card(
@@ -193,12 +193,13 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
   }
 
   Widget _buildExperienceList(List<ExperienceModel> items) {
-    if (items.isEmpty)
+    if (items.isEmpty) {
       return _buildEmptyState("Nenhuma experiência encontrada.");
+    }
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final item = items[index];
         return Card(
@@ -256,7 +257,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final item = items[index];
         return Card(
@@ -285,12 +286,13 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
   }
 
   Widget _buildCertificateList(List<CertificateModel> items) {
-    if (items.isEmpty)
+    if (items.isEmpty) {
       return _buildEmptyState("Nenhum certificado encontrado.");
+    }
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final item = items[index];
         return Card(
