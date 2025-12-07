@@ -98,10 +98,9 @@ class _SkillFormState extends State<SkillForm> {
               children: [
                 Text(
                   widget.skill == null ? 'Nova Skill' : 'Editar Skill',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
@@ -141,13 +140,12 @@ class _SkillFormState extends State<SkillForm> {
                           filled: true,
                           fillColor: Colors.grey.shade50,
                         ),
-                        items:
-                            SkillType.values.map((t) {
-                              return DropdownMenuItem(
-                                value: t,
-                                child: Text(t.name.toUpperCase()),
-                              );
-                            }).toList(),
+                        items: SkillType.values.map((t) {
+                          return DropdownMenuItem(
+                            value: t,
+                            child: Text(t.name.toUpperCase()),
+                          );
+                        }).toList(),
                         onChanged: (val) {
                           if (val != null) setState(() => _type = val);
                         },
@@ -222,8 +220,9 @@ class _SkillFormState extends State<SkillForm> {
         filled: true,
         fillColor: Colors.grey.shade50,
       ),
-      validator:
-          required ? (v) => v?.isEmpty == true ? 'Campo obrigatório' : null : null,
+      validator: required
+          ? (v) => v?.isEmpty == true ? 'Campo obrigatório' : null
+          : null,
     );
   }
 }

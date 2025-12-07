@@ -109,10 +109,9 @@ class _ExperienceFormState extends State<ExperienceForm> {
                   widget.experience == null
                       ? 'Nova Experiência'
                       : 'Editar Experiência',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
@@ -237,8 +236,9 @@ class _ExperienceFormState extends State<ExperienceForm> {
         filled: true,
         fillColor: Colors.grey.shade50,
       ),
-      validator:
-          required ? (v) => v?.isEmpty == true ? 'Campo obrigatório' : null : null,
+      validator: required
+          ? (v) => v?.isEmpty == true ? 'Campo obrigatório' : null
+          : null,
     );
   }
 }
