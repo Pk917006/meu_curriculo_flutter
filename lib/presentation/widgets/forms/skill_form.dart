@@ -211,7 +211,7 @@ class _SkillFormState extends State<SkillForm> {
                       ),
                       const SizedBox(height: 16),
                       DropdownButtonFormField<SkillType>(
-                        value: _type,
+                        initialValue: _type,
                         decoration: InputDecoration(
                           labelText: 'Tipo',
                           prefixIcon: const Icon(Icons.category),
