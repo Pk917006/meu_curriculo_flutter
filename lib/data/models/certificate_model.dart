@@ -10,4 +10,13 @@ class CertificateModel {
     required this.date,
     this.credentialUrl,
   });
+
+  factory CertificateModel.fromMap(Map<String, dynamic> map) {
+    return CertificateModel(
+      title: map['title'] ?? '',
+      issuer: map['issuer'] ?? '',
+      date: map['date'] ?? '',
+      credentialUrl: map['credential_url'],
+    );
+  }
 }

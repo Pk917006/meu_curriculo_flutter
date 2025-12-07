@@ -14,4 +14,15 @@ class ProjectModel {
     this.liveUrl,
     this.imageUrl,
   });
+
+  factory ProjectModel.fromMap(Map<String, dynamic> map) {
+    return ProjectModel(
+      title: map['title'] ?? '',
+      description: map['description'] ?? '',
+      techStack: List<String>.from(map['tech_stack'] ?? []),
+      repoUrl: map['repo_url'] ?? '',
+      liveUrl: map['live_url'],
+      imageUrl: map['image_url'],
+    );
+  }
 }

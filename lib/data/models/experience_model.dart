@@ -12,4 +12,14 @@ class ExperienceModel {
     required this.description,
     this.isCurrent = false,
   });
+
+  factory ExperienceModel.fromMap(Map<String, dynamic> map) {
+    return ExperienceModel(
+      role: map['role'] ?? '',
+      company: map['company'] ?? '',
+      period: map['period'] ?? '',
+      description: map['description'] ?? '',
+      isCurrent: map['is_current'] ?? false,
+    );
+  }
 }

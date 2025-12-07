@@ -1,5 +1,7 @@
 // Flutter imports:
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class AppAssets {
   // Imagens (baseado nos arquivos que você subiu)
   static const String profileImage = 'assets/img/minha_foto.jpg';
@@ -30,4 +32,14 @@ class AppColors {
   static const int primary = 0xFF3845BD;
   static const int backgroundLight = 0xFFF9F9F9;
   static const int surfaceWhite = 0xFFFFFFFF;
+}
+
+class AppConstants {
+  // Agora buscamos as chaves do arquivo oculto com segurança
+  static String get supabaseUrl => dotenv.env['SUPABASE_URL'] ?? '';
+  static String get supabaseAnonKey => dotenv.env['SUPABASE_ANON_KEY'] ?? '';
+
+  static const String profileImage = 'assets/img/minha_foto.jpg';
+  static const String cvPtBr =
+      'assets/docs/curriculo_2024_Franklyn_Roberto.pdf';
 }
