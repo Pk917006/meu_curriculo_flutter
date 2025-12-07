@@ -36,28 +36,31 @@ class _HomePageState extends State<HomePage> {
         child: controller.isLoading
             ? const Center(child: CircularProgressIndicator())
             : controller.errorMessage != null
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.error_outline,
-                            size: 60, color: Colors.red),
-                        const SizedBox(height: 16),
-                        Text(
-                          controller.errorMessage!,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 24),
-                        ElevatedButton.icon(
-                          onPressed: () => controller.loadAllData(),
-                          icon: const Icon(Icons.refresh),
-                          label: const Text("Tentar Novamente"),
-                        )
-                      ],
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      size: 60,
+                      color: Colors.red,
                     ),
-                  )
-                : Stack(
-                    children: [
+                    const SizedBox(height: 16),
+                    Text(
+                      controller.errorMessage!,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton.icon(
+                      onPressed: () => controller.loadAllData(),
+                      icon: const Icon(Icons.refresh),
+                      label: const Text("Tentar Novamente"),
+                    ),
+                  ],
+                ),
+              )
+            : Stack(
+                children: [
                   SingleChildScrollView(
                     controller:
                         controller.scrollController, // Conecta o controller

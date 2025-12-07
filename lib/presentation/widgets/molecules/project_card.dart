@@ -68,8 +68,8 @@ class _ProjectCardState extends State<ProjectCard> {
                     color: hovered
                         ? const Color(AppColors.primary).withOpacity(0.3)
                         : (isDark
-                            ? Colors.white.withOpacity(0.05)
-                            : Colors.black.withOpacity(0.05)),
+                              ? Colors.white.withOpacity(0.05)
+                              : Colors.black.withOpacity(0.05)),
                     blurRadius: hovered ? 30 : 10,
                     offset: hovered ? const Offset(0, 15) : const Offset(0, 5),
                   ),
@@ -94,7 +94,8 @@ class _ProjectCardState extends State<ProjectCard> {
                             FaIcon(
                               FontAwesomeIcons.arrowUpRightFromSquare,
                               size: 16,
-                              color: theme.iconTheme.color?.withOpacity(0.5) ??
+                              color:
+                                  theme.iconTheme.color?.withOpacity(0.5) ??
                                   Colors.grey,
                             ),
                           ],

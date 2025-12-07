@@ -109,10 +109,13 @@ class GlassHeader extends StatelessWidget {
                             } else if (value == 'skills') {
                               controller.scrollToSection(controller.skillsKey);
                             } else if (value == 'experience') {
-                              controller
-                                  .scrollToSection(controller.experienceKey);
+                              controller.scrollToSection(
+                                controller.experienceKey,
+                              );
                             } else if (value == 'projects') {
-                              controller.scrollToSection(controller.projectsKey);
+                              controller.scrollToSection(
+                                controller.projectsKey,
+                              );
                             }
                           },
                           itemBuilder: (BuildContext context) => [
@@ -134,8 +137,9 @@ class GlassHeader extends StatelessWidget {
                                 children: [
                                   Icon(
                                     isDark ? Icons.light_mode : Icons.dark_mode,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                     size: 20,
                                   ),
                                   const SizedBox(width: 10),
