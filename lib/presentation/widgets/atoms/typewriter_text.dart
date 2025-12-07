@@ -45,7 +45,7 @@ class _TypewriterTextState extends State<TypewriterText> {
       _isDeleting ? widget.deletingSpeed : widget.typingSpeed,
       (timer) {
         if (!mounted) return;
-        
+
         final currentFullText = widget.texts[_currentIndex];
 
         if (_isDeleting) {

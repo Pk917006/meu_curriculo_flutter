@@ -17,37 +17,61 @@ class BackgroundPattern extends StatelessWidget {
         Positioned(
           top: -100,
           left: -100,
-          child: ImageFiltered(
-            imageFilter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
-            child: Container(
-              width: 400,
-              height: 400,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.purple.withOpacity(0.15),
-              ),
-            ),
-          ).animate(onPlay: (controller) => controller.repeat(reverse: true))
-           .scale(begin: Offset(1, 1), end: Offset(1.5, 1.5), duration: 4.seconds)
-           .move(begin: Offset(0, 0), end: Offset(50, 50), duration: 5.seconds),
+          child:
+              ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
+                    child: Container(
+                      width: 400,
+                      height: 400,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.purple.withOpacity(0.15),
+                      ),
+                    ),
+                  )
+                  .animate(
+                    onPlay: (controller) => controller.repeat(reverse: true),
+                  )
+                  .scale(
+                    begin: Offset(1, 1),
+                    end: Offset(1.5, 1.5),
+                    duration: 4.seconds,
+                  )
+                  .move(
+                    begin: Offset(0, 0),
+                    end: Offset(50, 50),
+                    duration: 5.seconds,
+                  ),
         ),
-        
+
         Positioned(
           bottom: -50,
           right: -50,
-          child: ImageFiltered(
-            imageFilter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
-            child: Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.blue.withOpacity(0.15),
-              ),
-            ),
-          ).animate(onPlay: (controller) => controller.repeat(reverse: true))
-           .scale(begin: Offset(1, 1), end: Offset(1.2, 1.2), duration: 3.seconds)
-           .move(begin: Offset(0, 0), end: Offset(-30, -30), duration: 4.seconds),
+          child:
+              ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
+                    child: Container(
+                      width: 300,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue.withOpacity(0.15),
+                      ),
+                    ),
+                  )
+                  .animate(
+                    onPlay: (controller) => controller.repeat(reverse: true),
+                  )
+                  .scale(
+                    begin: Offset(1, 1),
+                    end: Offset(1.2, 1.2),
+                    duration: 3.seconds,
+                  )
+                  .move(
+                    begin: Offset(0, 0),
+                    end: Offset(-30, -30),
+                    duration: 4.seconds,
+                  ),
         ),
 
         // Padrão de Pontos Customizado

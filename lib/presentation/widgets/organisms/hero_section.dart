@@ -199,7 +199,7 @@ class HeroSection extends StatelessWidget {
                   "MOBILE DEVELOPER (FLUTTER)",
                   "FULLSTACK ENGINEER",
                   "CREATIVE CODER",
-                  "TECH ENTHUSIAST"
+                  "TECH ENTHUSIAST",
                 ],
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
