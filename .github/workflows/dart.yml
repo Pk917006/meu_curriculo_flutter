@@ -6,7 +6,6 @@ on:
   pull_request:
     branches: ["gh-pages"]
 
-# Permite cancelar builds antigos se você der vários pushs seguidos
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -23,16 +22,26 @@ jobs:
       name: github-pages
 
     steps:
+      # 1. Pegar o código
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # MELHORIA: Cache para o build ser mais rápido nas próximas vezes
-      - name: Cache Flutter packages
+      # 2. Cache do Flutter SDK e pacotes
+      - name: Cache Flutter SDK
         uses: actions/cache@v3
         with:
           path: /opt/hostedtoolcache/flutter
           key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
 
+      - name: Cache Flutter packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+
+      # 3. Criar .env seguro
       - name: Create .env file
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -41,25 +50,31 @@ jobs:
           echo "SUPABASE_URL=$SUPABASE_URL" > .env
           echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
 
+      # 4. Configurar Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          cache: true # Ativa o cache nativo da action
+          cache: true
 
+      # 5. Instalar dependências
       - name: Install dependencies
         run: flutter pub get
 
+      # 6. Limpar builds anteriores
+      - name: Clean previous build
+        run: flutter clean
+
+      # 7. Build web
       - name: Build Web
-        # Importante: O base-href deve corresponder ao nome do repositório
         run: flutter build web --release --base-href "/meu_curriculo_flutter/"
 
+      # 8. Deploy para GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
-          # ALTERADO: Publica em uma branch separada para não apagar seu código fonte!
           publish_branch: deploy-site
           user_name: "GitHub Actions"
           user_email: "actions@github.com"
