@@ -28,6 +28,7 @@ create table skills (
   name text not null,
   type text not null, -- Vamos usar: 'mobile', 'web' ou 'tools'
   is_highlight boolean default false, -- Se é destaque (true/false)
+  icon_asset text, -- Caminho do ícone (opcional)
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
@@ -42,8 +43,6 @@ create policy "Qualquer um pode ler experiencias" on experiences for select usin
 
 alter table skills enable row level security;
 create policy "Qualquer um pode ler skills" on skills for select using (true);
-
-ALTER TABLE skills ADD COLUMN icon_url text;
 
 alter table certificates enable row level security;
 create policy "Public Access" on certificates for select using (true);
