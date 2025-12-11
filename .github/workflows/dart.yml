@@ -1,10 +1,10 @@
-name: Deploy to GitHub Pages
+name: Deploy Flutter Web to GitHub Pages
 
 on:
   push:
-    branches: ["main", "developer"] # branches que disparam o workflow
+    branches: ["main"] # dispara apenas quando a main é atualizada
   pull_request:
-    branches: ["main", "developer"]
+    branches: ["main"]
 
 concurrency:
   group: "pages"
@@ -16,21 +16,23 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment: github-pages
 
     steps:
-      # 1. Pegar o código
+      # 1. Pegar o código da main
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Cache do Flutter SDK e pacotes
+      # 2. Cache do Flutter SDK
       - name: Cache Flutter SDK
         uses: actions/cache@v3
         with:
           path: /opt/hostedtoolcache/flutter
           key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
 
+      # 3. Cache dos pacotes
       - name: Cache Flutter packages
         uses: actions/cache@v3
         with:
@@ -39,7 +41,7 @@ jobs:
             .dart_tool
           key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
 
-      # 3. Criar .env seguro
+      # 4. Criar .env seguro
       - name: Create .env file
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -48,33 +50,26 @@ jobs:
           echo "SUPABASE_URL=$SUPABASE_URL" > .env
           echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
 
-      # 4. Configurar Flutter
+      # 5. Configurar Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
           cache: true
 
-      # 5. Instalar dependências
+      # 6. Instalar dependências
       - name: Install dependencies
         run: flutter pub get
 
-      # 6. Limpar builds anteriores
+      # 7. Limpar builds anteriores
       - name: Clean previous build
         run: flutter clean
 
-      # 7. Build web
+      # 8. Build web
       - name: Build Web
         run: flutter build web --release --base-href "/meu_curriculo_flutter/"
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: github-pages # só o deploy usa o environment
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
+      # 9. Deploy para gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -83,3 +78,4 @@ jobs:
           publish_branch: gh-pages
           user_name: "GitHub Actions"
           user_email: "actions@github.com"
+          commit_message: "Deploy Flutter Web to GitHub Pages"
