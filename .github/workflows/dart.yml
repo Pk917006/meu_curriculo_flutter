@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: ["gh-pages"]
 
+# Permite cancelar builds antigos se você der vários pushs seguidos
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 permissions:
   contents: write
   pages: write
@@ -15,43 +20,46 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-      name: github-pages # ambiente com secrets
+      name: github-pages
 
     steps:
-      # 1. Pegar o código da main
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Criar .env a partir dos secrets do ambiente (sem mostrar valores)
-      - name: Create .env file from Environment Secrets
+      # MELHORIA: Cache para o build ser mais rápido nas próximas vezes
+      - name: Cache Flutter packages
+        uses: actions/cache@v3
+        with:
+          path: /opt/hostedtoolcache/flutter
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+
+      - name: Create .env file
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           echo "SUPABASE_URL=$SUPABASE_URL" > .env
           echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
-          echo "Arquivo .env criado com sucesso."
 
-      # 3. Configurar Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          cache: true # Ativa o cache nativo da action
 
-      # 4. Instalar dependências
       - name: Install dependencies
         run: flutter pub get
 
-      # 5. Gerar build web
       - name: Build Web
+        # Importante: O base-href deve corresponder ao nome do repositório
         run: flutter build web --release --base-href "/meu_curriculo_flutter/"
 
-      # 6. Deploy para a branch gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
-          publish_branch: gh-pages
+          # ALTERADO: Publica em uma branch separada para não apagar seu código fonte!
+          publish_branch: deploy-site
           user_name: "GitHub Actions"
           user_email: "actions@github.com"
