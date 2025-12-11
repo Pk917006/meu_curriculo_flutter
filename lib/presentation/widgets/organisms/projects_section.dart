@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:meu_curriculo_flutter/core/constants/app_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
+import 'package:meu_curriculo_flutter/core/constants/app_constants.dart';
 import '../../../data/models/project_model.dart';
 import '../molecules/project_card.dart';
 

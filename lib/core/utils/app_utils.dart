@@ -1,9 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:meu_curriculo_flutter/core/utils/app_logger.dart';
 
 // Package imports:
 import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
+import 'package:meu_curriculo_flutter/core/utils/app_logger.dart';
 
 class AppUtils {
   /// Abre uma URL no navegador externo.
