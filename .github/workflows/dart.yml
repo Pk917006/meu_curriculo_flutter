@@ -2,9 +2,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["gh-pages"]
+    branches: ["main", "developer"] # branches que disparam o workflow
   pull_request:
-    branches: ["gh-pages"]
+    branches: ["main", "developer"]
 
 concurrency:
   group: "pages"
@@ -18,8 +18,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
 
     steps:
       # 1. Pegar o código
@@ -69,12 +67,19 @@ jobs:
       - name: Build Web
         run: flutter build web --release --base-href "/meu_curriculo_flutter/"
 
-      # 8. Deploy para GitHub Pages
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: github-pages # só o deploy usa o environment
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
-          publish_branch: deploy-site
+          publish_branch: gh-pages
           user_name: "GitHub Actions"
           user_email: "actions@github.com"
