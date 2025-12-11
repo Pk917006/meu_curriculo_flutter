@@ -2,16 +2,27 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../data/repositories/supabase_repository.dart';
+import 'package:meu_curriculo_flutter/data/repositories/supabase_repository.dart';
 
 class AuthController extends ChangeNotifier {
   final SupabaseRepository repository;
 
-  AuthController(this.repository);
+  AuthController(this.repository) {
+    // Verifica se já existe uma sessão ativa ao inicializar
+    _checkSession();
+  }
 
   bool get isLogged => repository.isAuthenticated;
 
-  Future<bool> login(String email, String pass) async {
+  // Verifica a sessão existente
+  void _checkSession() {
+    // O Supabase automaticamente restaura a sessão se houver uma válida
+    if (repository.isAuthenticated) {
+      notifyListeners();
+    }
+  }
+
+  Future<bool> login(final String email, final String pass) async {
     final success = await repository.signIn(email, pass);
     if (success) notifyListeners();
     return success;

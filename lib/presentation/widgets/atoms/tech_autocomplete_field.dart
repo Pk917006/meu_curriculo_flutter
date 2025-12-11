@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../core/constants/tech_suggestions.dart';
+import 'package:meu_curriculo_flutter/core/constants/tech_suggestions.dart';
 
 class TechAutocompleteField extends StatelessWidget {
   final TextEditingController controller;
@@ -14,10 +14,7 @@ class TechAutocompleteField extends StatelessWidget {
   final List<String>? excludeItems;
 
   const TechAutocompleteField({
-    super.key,
-    required this.controller,
-    required this.label,
-    required this.icon,
+    required this.controller, required this.label, required this.icon, super.key,
     this.required = false,
     this.onSelected,
     this.onFieldSubmitted,
@@ -25,16 +22,16 @@ class TechAutocompleteField extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) {
+      builder: (final context, final constraints) {
         return Autocomplete<String>(
           initialValue: TextEditingValue(text: controller.text),
-          optionsBuilder: (TextEditingValue textEditingValue) {
+          optionsBuilder: (final TextEditingValue textEditingValue) {
             if (textEditingValue.text == '') {
               return const Iterable<String>.empty();
             }
-            return kTechSuggestions.where((String option) {
+            return kTechSuggestions.where((final String option) {
               final matches = option.toLowerCase().contains(
                 textEditingValue.text.toLowerCase(),
               );
@@ -42,16 +39,16 @@ class TechAutocompleteField extends StatelessWidget {
               return matches && !isExcluded;
             });
           },
-          onSelected: (String selection) {
+          onSelected: (final String selection) {
             controller.text = selection;
             onSelected?.call(selection);
           },
           fieldViewBuilder:
               (
-                BuildContext context,
-                TextEditingController fieldTextEditingController,
-                FocusNode fieldFocusNode,
-                VoidCallback onFieldSubmitted,
+                final BuildContext context,
+                final TextEditingController fieldTextEditingController,
+                final FocusNode fieldFocusNode,
+                final VoidCallback onFieldSubmitted,
               ) {
                 // Sync external controller with internal one if needed
                 // But here we want the external controller to be the source of truth eventually.
@@ -89,12 +86,12 @@ class TechAutocompleteField extends StatelessWidget {
                         : null,
                   ),
                   validator: required
-                      ? (v) => v?.isEmpty == true ? 'Campo obrigatório' : null
+                      ? (final v) => v?.isEmpty == true ? 'Campo obrigatório' : null
                       : null,
-                  onChanged: (val) {
+                  onChanged: (final val) {
                     controller.text = val;
                   },
-                  onFieldSubmitted: (val) {
+                  onFieldSubmitted: (final val) {
                     onFieldSubmitted(); // Call Autocomplete's onFieldSubmitted to close overlay
                     this.onFieldSubmitted?.call(val);
                   },
@@ -102,22 +99,22 @@ class TechAutocompleteField extends StatelessWidget {
               },
           optionsViewBuilder:
               (
-                BuildContext context,
-                AutocompleteOnSelected<String> onSelected,
-                Iterable<String> options,
+                final BuildContext context,
+                final AutocompleteOnSelected<String> onSelected,
+                final Iterable<String> options,
               ) {
                 return Align(
                   alignment: Alignment.topLeft,
                   child: Material(
-                    elevation: 4.0,
+                    elevation: 4,
                     child: SizedBox(
                       width: constraints.maxWidth,
                       child: ListView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         itemCount: options.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final String option = options.elementAt(index);
+                        itemBuilder: (final BuildContext context, final int index) {
+                          final option = options.elementAt(index);
                           return ListTile(
                             title: Text(option),
                             onTap: () {

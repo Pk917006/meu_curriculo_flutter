@@ -11,10 +11,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
 
   const CustomTextField({
-    super.key,
-    required this.controller,
-    required this.label,
-    required this.icon,
+    required this.controller, required this.label, required this.icon, super.key,
     this.hint,
     this.maxLines = 1,
     this.required = false,
@@ -22,7 +19,7 @@ class CustomTextField extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return TextFormField(
       controller: controller,
       maxLines: maxLines,
@@ -36,7 +33,7 @@ class CustomTextField extends StatelessWidget {
         fillColor: Colors.grey.shade50,
       ),
       validator: required
-          ? (v) => v?.isEmpty == true ? 'Campo obrigatório' : null
+          ? (final v) => v?.isEmpty == true ? 'Campo obrigatório' : null
           : null,
     );
   }

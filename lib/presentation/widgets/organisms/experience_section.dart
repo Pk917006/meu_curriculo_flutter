@@ -5,21 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 // Project imports:
-import '../../../data/models/experience_model.dart';
-import '../molecules/experience_card.dart';
+import 'package:meu_curriculo_flutter/data/models/experience_model.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/molecules/experience_card.dart';
 
 class ExperienceSection extends StatelessWidget {
   final List<ExperienceModel> experiences;
 
-  const ExperienceSection({super.key, required this.experiences});
+  const ExperienceSection({required this.experiences, super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "EXPERIÊNCIA PROFISSIONAL",
+          'EXPERIÊNCIA PROFISSIONAL',
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
@@ -54,7 +54,7 @@ class ExperienceSection extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: experiences.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (final context, final index) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 24, bottom: 32),
                   child: Stack(

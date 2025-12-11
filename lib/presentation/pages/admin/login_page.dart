@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   bool _obscurePassword = true;
 
-  void _submit() async {
+  Future<void> _submit() async {
     setState(() => _isLoading = true);
     final auth = context.read<AuthController>();
     final success = await auth.login(_emailCtrl.text, _passCtrl.text);
@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       body: Center(
         child: Container(
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                "Admin Access",
+                'Admin Access',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 24),
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
                       ),
-                      child: const Text("Entrar"),
+                      child: const Text('Entrar'),
                     ),
             ],
           ),

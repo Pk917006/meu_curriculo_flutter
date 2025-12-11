@@ -1,9 +1,9 @@
 // Project imports:
-import '../mocks/mock_data.dart';
-import '../models/certificate_model.dart';
-import '../models/experience_model.dart';
-import '../models/project_model.dart';
-import '../models/skill_model.dart';
+import 'package:meu_curriculo_flutter/data/mocks/mock_data.dart';
+import 'package:meu_curriculo_flutter/data/models/certificate_model.dart';
+import 'package:meu_curriculo_flutter/data/models/experience_model.dart';
+import 'package:meu_curriculo_flutter/data/models/project_model.dart';
+import 'package:meu_curriculo_flutter/data/models/skill_model.dart';
 
 abstract class IPortfolioRepository {
   Future<List<ProjectModel>> getProjects();

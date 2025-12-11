@@ -9,17 +9,10 @@ class CertificateModel {
   final String date; // Novo
 
   const CertificateModel({
-    this.id,
-    required this.title,
-    required this.description,
-    required this.credentialUrl,
-    required this.language,
-    required this.framework,
-    required this.issuer,
-    required this.date,
+    required this.title, required this.description, required this.credentialUrl, required this.language, required this.framework, required this.issuer, required this.date, this.id,
   });
 
-  factory CertificateModel.fromMap(Map<String, dynamic> map) {
+  factory CertificateModel.fromMap(final Map<String, dynamic> map) {
     return CertificateModel(
       id: map['id'],
       title: map['title'] ?? '',

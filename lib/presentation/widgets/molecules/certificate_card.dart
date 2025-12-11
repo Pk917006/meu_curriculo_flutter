@@ -2,14 +2,14 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../core/utils/app_utils.dart';
-import '../../../data/models/certificate_model.dart';
-import '../atoms/tech_chip.dart';
+import 'package:meu_curriculo_flutter/core/utils/app_utils.dart';
+import 'package:meu_curriculo_flutter/data/models/certificate_model.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/tech_chip.dart';
 
 class CertificateCard extends StatefulWidget {
   final CertificateModel certificate;
 
-  const CertificateCard({super.key, required this.certificate});
+  const CertificateCard({required this.certificate, super.key});
 
   @override
   State<CertificateCard> createState() => _CertificateCardState();
@@ -27,7 +27,7 @@ class _CertificateCardState extends State<CertificateCard> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -37,7 +37,7 @@ class _CertificateCardState extends State<CertificateCard> {
         _isHovered.value = false;
         _mousePos.value = Offset.zero;
       },
-      onHover: (details) {
+      onHover: (final details) {
         final renderBox = context.findRenderObject() as RenderBox;
         final size = renderBox.size;
         final center = Offset(size.width / 2, size.height / 2);
@@ -45,7 +45,7 @@ class _CertificateCardState extends State<CertificateCard> {
       },
       child: AnimatedBuilder(
         animation: Listenable.merge([_mousePos, _isHovered]),
-        builder: (context, child) {
+        builder: (final context, final child) {
           final hovered = _isHovered.value;
           final mouse = _mousePos.value;
 
@@ -115,7 +115,7 @@ class _CertificateCardState extends State<CertificateCard> {
                                   Icons.open_in_new_rounded,
                                   size: 20,
                                 ),
-                                tooltip: "Ver Certificado",
+                                tooltip: 'Ver Certificado',
                                 style: IconButton.styleFrom(
                                   foregroundColor: theme.colorScheme.primary,
                                 ),
@@ -153,7 +153,7 @@ class _CertificateCardState extends State<CertificateCard> {
                                 horizontal: 6,
                               ),
                               child: Text(
-                                "•",
+                                '•',
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: Colors.grey,
                                 ),

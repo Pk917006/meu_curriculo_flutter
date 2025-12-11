@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // Project imports:
-import '../constants/app_constants.dart';
+import 'package:meu_curriculo_flutter/core/constants/app_constants.dart';
 
 class AppTheme {
   // Cores Light
@@ -33,10 +33,10 @@ class AppTheme {
   );
 
   static ThemeData _buildTheme({
-    required Brightness brightness,
-    required Color background,
-    required Color surface,
-    required Color textColor,
+    required final Brightness brightness,
+    required final Color background,
+    required final Color surface,
+    required final Color textColor,
   }) {
     return ThemeData(
       useMaterial3: true,

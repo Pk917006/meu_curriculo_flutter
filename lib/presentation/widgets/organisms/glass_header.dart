@@ -9,13 +9,13 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../controllers/portfolio_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/portfolio_controller.dart';
 
 class GlassHeader extends StatelessWidget {
   const GlassHeader({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final controller = context.read<PortfolioController>();
     final isDesktop = MediaQuery.of(context).size.width > 700;
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -53,7 +53,7 @@ class GlassHeader extends StatelessWidget {
                         onTap: () =>
                             controller.scrollToSection(controller.heroKey),
                         child: Text(
-                          "<Franklyn />",
+                          '<Franklyn />',
                           style: TextStyle(
                             fontFamily: 'Code',
                             fontWeight: FontWeight.w900,
@@ -67,28 +67,28 @@ class GlassHeader extends StatelessWidget {
                         Row(
                           children: [
                             _HeaderItem(
-                              title: "Skills",
+                              title: 'Skills',
                               onTap: () => controller.scrollToSection(
                                 controller.skillsKey,
                               ),
                             ),
                             const SizedBox(width: 20),
                             _HeaderItem(
-                              title: "Experiência",
+                              title: 'Experiência',
                               onTap: () => controller.scrollToSection(
                                 controller.experienceKey,
                               ),
                             ),
                             const SizedBox(width: 20),
                             _HeaderItem(
-                              title: "Projetos",
+                              title: 'Projetos',
                               onTap: () => controller.scrollToSection(
                                 controller.projectsKey,
                               ),
                             ),
                             const SizedBox(width: 20),
                             _HeaderItem(
-                              title: "Certificados",
+                              title: 'Certificados',
                               onTap: () => controller.scrollToSection(
                                 controller.certificatesKey,
                               ),
@@ -102,7 +102,7 @@ class GlassHeader extends StatelessWidget {
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                               onPressed: controller.toggleTheme,
-                              tooltip: "Alternar Tema",
+                              tooltip: 'Alternar Tema',
                             ).animate().rotate(duration: 500.ms),
                           ],
                         )
@@ -116,7 +116,7 @@ class GlassHeader extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          onSelected: (value) {
+                          onSelected: (final value) {
                             if (value == 'theme') {
                               controller.toggleTheme();
                             } else if (value == 'skills') {
@@ -135,7 +135,7 @@ class GlassHeader extends StatelessWidget {
                               );
                             }
                           },
-                          itemBuilder: (BuildContext context) => [
+                          itemBuilder: (final BuildContext context) => [
                             const PopupMenuItem(
                               value: 'skills',
                               child: Text('Skills'),
@@ -199,7 +199,7 @@ class _HeaderItemState extends State<_HeaderItem> {
   bool isHovered = false;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return MouseRegion(

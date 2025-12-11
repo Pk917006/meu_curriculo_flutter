@@ -6,16 +6,16 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import '../../../core/constants/app_constants.dart';
-import '../atoms/magnetic_element.dart';
-import '../atoms/social_button.dart';
-import '../atoms/typewriter_text.dart';
+import 'package:meu_curriculo_flutter/core/constants/app_constants.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/magnetic_element.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/social_button.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/typewriter_text.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isMobile = size.width < 800;
 
@@ -68,7 +68,7 @@ class HeroSection extends StatelessWidget {
               top: 60,
               right: 120,
               child: MagneticElement(
-                strength: 2.0,
+                strength: 2,
                 child: FaIcon(
                   FontAwesomeIcons.react,
                   size: 50,
@@ -156,7 +156,7 @@ class HeroSection extends StatelessWidget {
               bottom: 130,
               right: 280,
               child: MagneticElement(
-                strength: 1.0,
+                strength: 1,
                 child: FaIcon(
                   FontAwesomeIcons.gitAlt,
                   size: 35,
@@ -228,7 +228,7 @@ class HeroSection extends StatelessWidget {
               bottom: 220,
               right: 60,
               child: MagneticElement(
-                strength: 1.0,
+                strength: 1,
                 child: FaIcon(
                   FontAwesomeIcons.linux,
                   size: 34,
@@ -308,7 +308,7 @@ class HeroSection extends StatelessWidget {
                     ).withValues(alpha: 0.3),
                   )
                   .animate(
-                    onPlay: (controller) =>
+                    onPlay: (final controller) =>
                         controller.repeat(period: 5.seconds),
                   )
                   .tint(
@@ -324,10 +324,10 @@ class HeroSection extends StatelessWidget {
               // Typewriter Effect for Role
               TypewriterText(
                 texts: const [
-                  "MOBILE DEVELOPER (FLUTTER)",
-                  "FULLSTACK ENGINEER",
-                  "CREATIVE CODER",
-                  "TECH ENTHUSIAST",
+                  'MOBILE DEVELOPER (FLUTTER)',
+                  'FULLSTACK ENGINEER',
+                  'CREATIVE CODER',
+                  'TECH ENTHUSIAST',
                 ],
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,

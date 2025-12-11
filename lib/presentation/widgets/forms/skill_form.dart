@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../data/models/skill_model.dart';
-import '../../controllers/auth_controller.dart';
-import '../../controllers/portfolio_controller.dart';
-import '../atoms/custom_text_field.dart';
-import '../atoms/tech_autocomplete_field.dart';
+import 'package:meu_curriculo_flutter/core/utils/app_logger.dart';
+import 'package:meu_curriculo_flutter/data/models/skill_model.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/auth_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/portfolio_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/custom_text_field.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/tech_autocomplete_field.dart';
 
 class SkillForm extends StatefulWidget {
   final SkillModel? skill;
@@ -78,7 +79,12 @@ class _SkillFormState extends State<SkillForm> {
           const SnackBar(content: Text('Skill salva com sucesso!')),
         );
       }
-    } catch (e) {
+    } catch (e, stack) {
+      await AppLogger.log(
+        level: 'error',
+        message: e.toString(),
+        stack: stack.toString(),
+      );
       if (mounted) {
         ScaffoldMessenger.of(
           context,
@@ -90,7 +96,7 @@ class _SkillFormState extends State<SkillForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
@@ -147,13 +153,13 @@ class _SkillFormState extends State<SkillForm> {
                           filled: true,
                           fillColor: Colors.grey.shade50,
                         ),
-                        items: SkillType.values.map((t) {
+                        items: SkillType.values.map((final t) {
                           return DropdownMenuItem(
                             value: t,
                             child: Text(t.name.toUpperCase()),
                           );
                         }).toList(),
-                        onChanged: (val) {
+                        onChanged: (final val) {
                           if (val != null) setState(() => _type = val);
                         },
                       ),
@@ -162,7 +168,7 @@ class _SkillFormState extends State<SkillForm> {
                         title: const Text('Destaque?'),
                         secondary: const Icon(Icons.star),
                         value: _isHighlight,
-                        onChanged: (val) => setState(() => _isHighlight = val),
+                        onChanged: (final val) => setState(() => _isHighlight = val),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                           side: BorderSide(color: Colors.grey.shade300),

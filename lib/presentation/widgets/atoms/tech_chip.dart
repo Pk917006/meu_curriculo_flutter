@@ -5,10 +5,10 @@ class TechChip extends StatelessWidget {
   final String label;
   final bool isHighlight;
 
-  const TechChip({super.key, required this.label, this.isHighlight = false});
+  const TechChip({required this.label, super.key, this.isHighlight = false});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final theme = Theme.of(context);
 
     return Container(

@@ -48,7 +48,7 @@ void main() {
     );
   }
 
-  testWidgets('HomePage loads data on startup', (WidgetTester tester) async {
+  testWidgets('HomePage loads data on startup', (final WidgetTester tester) async {
     // Set a large screen size to avoid overflows in desktop layout
     tester.view.physicalSize = const Size(1920, 1080);
     tester.view.devicePixelRatio = 1.0;
@@ -70,7 +70,7 @@ void main() {
   });
 
   testWidgets('HomePage shows error message when loading fails', (
-    WidgetTester tester,
+    final WidgetTester tester,
   ) async {
     // Set a large screen size to avoid overflows in desktop layout
     tester.view.physicalSize = const Size(1920, 1080);

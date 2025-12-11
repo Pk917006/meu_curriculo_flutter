@@ -1,8 +1,8 @@
 // Project imports:
-import '../models/certificate_model.dart';
-import '../models/experience_model.dart';
-import '../models/project_model.dart';
-import '../models/skill_model.dart';
+import 'package:meu_curriculo_flutter/data/models/certificate_model.dart';
+import 'package:meu_curriculo_flutter/data/models/experience_model.dart';
+import 'package:meu_curriculo_flutter/data/models/project_model.dart';
+import 'package:meu_curriculo_flutter/data/models/skill_model.dart';
 
 class MockData {
   // --- EXPERIÊNCIAS, PROJETOS E SKILLS ATUALIZADOS ---

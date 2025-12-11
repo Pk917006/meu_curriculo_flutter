@@ -12,21 +12,19 @@ class SocialButton extends StatelessWidget {
   final Color? color;
 
   const SocialButton({
-    super.key,
-    required this.icon,
-    required this.url,
+    required this.icon, required this.url, super.key,
     this.color,
   });
 
   Future<void> _launchUrl() async {
-    final Uri uri = Uri.parse(url);
+    final uri = Uri.parse(url);
     if (!await launchUrl(uri)) {
       debugPrint('Could not launch $url');
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return IconButton(
           onPressed: _launchUrl,
           icon: FaIcon(icon, size: 28),
@@ -37,7 +35,7 @@ class SocialButton extends StatelessWidget {
             ).colorScheme.primary.withValues(alpha: 0.1),
           ),
         )
-        .animate(onPlay: (controller) => controller.repeat(reverse: true))
+        .animate(onPlay: (final controller) => controller.repeat(reverse: true))
         .scaleXY(
           end: 1.1,
           duration: 1.seconds,

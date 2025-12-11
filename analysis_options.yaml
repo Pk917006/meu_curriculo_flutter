@@ -1,10 +1,48 @@
 include: package:flutter_lints/flutter.yaml
 
+code_style:
+  line-length: 120
+
 linter:
   rules:
-    prefer_const_constructors: true
-    prefer_final_locals: true
-    always_declare_return_types: true
-    annotate_overrides: true
-    avoid_print: true # Use logger ou debugPrint
-
+    avoid_print: true # Evita o uso de print, que pode ser útil para depuração, mas deve ser removido em produção.
+    prefer_single_quotes: true # Usa aspas simples em strings para manter a consistência.
+    prefer_const_constructors: true # Encoraja o uso de construtores constantes quando possível para otimização.
+    prefer_final_fields: true # Use final para campos que não são reatribuídos, garantindo imutabilidade.
+    prefer_is_not_empty: true # Incentiva o uso de isNotEmpty em vez de !isEmpty para clareza.
+    always_use_package_imports: true # Garante que todos os imports sejam feitos com package: para evitar conflitos de nome.
+    avoid_empty_else: true # Evita blocos else vazios que podem confundir a leitura do código.
+    avoid_unnecessary_containers: true # Evita o uso desnecessário de Container quando outro widget pode ser mais apropriado.
+    avoid_redundant_argument_values: false # Evita passar valores padrão redundantes para parâmetros.
+    prefer_const_literals_to_create_immutables: true # Incentiva o uso de literais const para listas e mapas imutáveis.
+    prefer_final_locals: true # Use final para variáveis locais que não são reatribuídas, melhorando a legibilidade.
+    file_names: true # Garante que os nomes de arquivos sigam as convenções de nomenclatura.
+    unnecessary_new: true # Remove a palavra-chave 'new', que é desnecessária nas versões mais recentes do Dart.
+    prefer_adjacent_string_concatenation: true # Incentiva a concatenação de strings adjacentes em uma única operação.
+    prefer_inlined_adds: true # Incentiva o uso de adição em linha em vez de métodos separados, quando possível.
+    unnecessary_this: true # Remove o uso desnecessário do 'this', que pode ser redundante em alguns contextos.
+    avoid_return_types_on_setters: true # Evita o uso de tipos de retorno em setters, que devem ser void.
+    prefer_final_parameters: true # Use final para parâmetros que não são reatribuídos, promovendo a imutabilidade.
+    omit_local_variable_types: true # Incentiva a omissão de tipos de variáveis locais para permitir a inferência de tipo.
+    always_declare_return_types: true # Sempre declare tipos de retorno em funções para melhor legibilidade.
+    prefer_typing_uninitialized_variables: true # Exige que variáveis não inicializadas sejam tipadas.
+    avoid_dynamic_calls: true # Desencoraja o uso de chamadas dinâmicas, que podem introduzir erros.
+    use_key_in_widget_constructors: true # Incentiva o uso de chaves nos construtores de widgets para otimização de desempenho.
+    prefer_const_constructors_in_immutables: true # Incentiva construtores constantes em classes imutáveis.
+    always_put_required_named_parameters_first: true # Garante que os parâmetros nomeados obrigatórios venham primeiro.
+    sort_pub_dependencies: true # Ordena as dependências no pubspec.yaml para melhor organização.
+    unnecessary_const: true # Remove a palavra-chave 'const' onde não é necessária para simplificação do código.
+    use_setters_to_change_properties: true # Incentiva o uso de setters para modificar propriedades de objetos.
+    type_annotate_public_apis: true # Exige anotação de tipo para APIs públicas para maior clareza.
+    prefer_asserts_with_message: true # Incentiva o uso de mensagens em assertivas para facilitar a depuração.
+    prefer_spread_collections: true # Incentiva o uso de spread em coleções para simplificar a sintaxe.
+    prefer_mixin: true # Incentiva o uso de mixins em vez de herança para reutilização de código.
+    avoid_void_async: true # Desencoraja o uso de funções assíncronas que retornam void.
+    prefer_collection_literals: true # Incentiva o uso de literais de coleção em vez de construtores de coleção.
+    prefer_is_empty: true # Usa isEmpty em vez de verificar se o comprimento é 0, promovendo a legibilidade.
+    avoid_escaping_inner_quotes: true # Desencoraja a fuga de aspas internas em strings, que pode tornar o código confuso.
+    no_leading_underscores_for_local_identifiers: false # Proíbe sublinhados iniciais para identificadores locais, melhorando a clareza.
+    prefer_null_aware_operators: true # Incentiva o uso de operadores nulos para simplificar verificações nulas.
+    avoid_positional_boolean_parameters: true # Desencoraja o uso de parâmetros booleanos posicionais, que podem ser confusos.
+    avoid_implementing_value_types: true # Evita a implementação de tipos de valor, que pode causar problemas de desempenho.
+    prefer_int_literals: true # Incentiva o uso de literais int para números inteiros para maior clareza.

@@ -12,8 +12,7 @@ class TypewriterText extends StatefulWidget {
   final Duration holdDelay;
 
   const TypewriterText({
-    super.key,
-    required this.texts,
+    required this.texts, super.key,
     this.style,
     this.typingSpeed = const Duration(milliseconds: 100),
     this.deletingSpeed = const Duration(milliseconds: 50),
@@ -25,7 +24,7 @@ class TypewriterText extends StatefulWidget {
 }
 
 class _TypewriterTextState extends State<TypewriterText> {
-  String _displayedText = "";
+  String _displayedText = '';
   int _currentIndex = 0;
   int _charIndex = 0;
   bool _isDeleting = false;
@@ -46,7 +45,7 @@ class _TypewriterTextState extends State<TypewriterText> {
   void _startTyping() {
     _timer = Timer.periodic(
       _isDeleting ? widget.deletingSpeed : widget.typingSpeed,
-      (timer) {
+      (final timer) {
         if (!mounted) return;
 
         final currentFullText = widget.texts[_currentIndex];
@@ -80,9 +79,9 @@ class _TypewriterTextState extends State<TypewriterText> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Text(
-      "$_displayedText|",
+      '$_displayedText|',
       style: widget.style,
       textAlign: TextAlign.center,
     );

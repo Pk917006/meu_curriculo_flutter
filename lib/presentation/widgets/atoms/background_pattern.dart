@@ -10,7 +10,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 class BackgroundPattern extends StatefulWidget {
   final Widget child;
 
-  const BackgroundPattern({super.key, required this.child});
+  const BackgroundPattern({required this.child, super.key});
 
   @override
   State<BackgroundPattern> createState() => _BackgroundPatternState();
@@ -26,11 +26,11 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return MouseRegion(
-      onHover: (details) {
+      onHover: (final details) {
         _mousePos.value = details.position;
       },
       child: Stack(
@@ -38,7 +38,7 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
           // Animated Blobs com Parallax
           ValueListenableBuilder<Offset>(
             valueListenable: _mousePos,
-            builder: (context, mouse, _) {
+            builder: (final context, final mouse, _) {
               // Fator de movimento (quanto menor, mais sutil)
               final moveX = (mouse.dx / MediaQuery.of(context).size.width) * 50;
               final moveY =
@@ -66,7 +66,7 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
                               ),
                             )
                             .animate(
-                              onPlay: (controller) =>
+                              onPlay: (final controller) =>
                                   controller.repeat(reverse: true),
                             )
                             .scale(
@@ -96,7 +96,7 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
                               ),
                             )
                             .animate(
-                              onPlay: (controller) =>
+                              onPlay: (final controller) =>
                                   controller.repeat(reverse: true),
                             )
                             .scale(
@@ -136,7 +136,7 @@ class DotGridPainter extends CustomPainter {
   DotGridPainter({required this.color, required this.spacing});
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void paint(final Canvas canvas, final Size size) {
     final paint = Paint()
       ..color = color
       ..strokeWidth = 2
@@ -150,5 +150,5 @@ class DotGridPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant final CustomPainter oldDelegate) => false;
 }

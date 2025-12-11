@@ -8,7 +8,7 @@ class MagneticElement extends StatefulWidget {
   final Widget child;
   final double strength; // Força da repulsão
 
-  const MagneticElement({super.key, required this.child, this.strength = 1.0});
+  const MagneticElement({required this.child, super.key, this.strength = 1.0});
 
   @override
   State<MagneticElement> createState() => _MagneticElementState();
@@ -36,7 +36,7 @@ class _MagneticElementState extends State<MagneticElement>
     super.dispose();
   }
 
-  void _updatePosition(PointerEvent details, Size size) {
+  void _updatePosition(final PointerEvent details, final Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final mousePos = details.localPosition;
     final distance = (mousePos - center).distance;
@@ -59,17 +59,17 @@ class _MagneticElementState extends State<MagneticElement>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     // Interpolação suave (Lerp) para o movimento não ser travado
     _currentPosition =
         Offset.lerp(_currentPosition, _targetPosition, 0.1) ?? Offset.zero;
 
     return MouseRegion(
-      onHover: (details) => _updatePosition(details, context.size ?? Size.zero),
+      onHover: (final details) => _updatePosition(details, context.size ?? Size.zero),
       onExit: (_) => setState(() => _targetPosition = Offset.zero),
       child: AnimatedBuilder(
         animation: _controller,
-        builder: (context, child) {
+        builder: (final context, final child) {
           // Adiciona um movimento de "respiração" (flutuar) aleatório
           final floatY = math.sin(_controller.value * 2 * math.pi) * 5;
 

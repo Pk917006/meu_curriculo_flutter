@@ -5,16 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:meu_curriculo_flutter/core/utils/app_logger.dart';
 import 'package:meu_curriculo_flutter/data/models/certificate_model.dart';
 import 'package:meu_curriculo_flutter/data/models/experience_model.dart';
 import 'package:meu_curriculo_flutter/data/models/project_model.dart';
 import 'package:meu_curriculo_flutter/data/models/skill_model.dart';
-import '../../controllers/auth_controller.dart';
-import '../../controllers/portfolio_controller.dart';
-import '../../widgets/forms/certificate_form.dart';
-import '../../widgets/forms/experience_form.dart';
-import '../../widgets/forms/project_form.dart';
-import '../../widgets/forms/skill_form.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/auth_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/portfolio_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/forms/certificate_form.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/forms/experience_form.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/forms/project_form.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/forms/skill_form.dart';
 
 class AdminDashboardPage extends StatefulWidget {
   const AdminDashboardPage({super.key});
@@ -39,12 +40,12 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
     super.dispose();
   }
 
-  void _deleteItem(String table, int? id) async {
+  Future<void> _deleteItem(final String table, final int? id) async {
     if (id == null) return;
 
     final confirm = await showDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (final ctx) => AlertDialog(
         title: const Text('Confirmar Exclusão'),
         content: const Text('Tem certeza que deseja remover este item?'),
         actions: [
@@ -72,7 +73,12 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
           );
           portfolio.loadAllData();
         }
-      } catch (e) {
+      } catch (e, stack) {
+        await AppLogger.log(
+          level: 'error',
+          message: e.toString(),
+          stack: stack.toString(),
+        );
         if (mounted) {
           ScaffoldMessenger.of(
             context,
@@ -82,7 +88,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
     }
   }
 
-  void _showAddDialog(BuildContext context, int index) {
+  void _showAddDialog(final BuildContext context, final int index) {
     Widget? dialog;
 
     switch (index) {
@@ -106,13 +112,13 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final controller = context.watch<PortfolioController>();
     final authController = context.read<AuthController>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Painel Administrativo"),
+        title: const Text('Painel Administrativo'),
         centerTitle: true,
         elevation: 2,
         actions: [
@@ -134,10 +140,10 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
           controller: _tabController,
           indicatorWeight: 3,
           tabs: const [
-            Tab(icon: Icon(Icons.work_outline), text: "Projetos"),
-            Tab(icon: Icon(Icons.business), text: "Experiência"),
-            Tab(icon: Icon(Icons.code), text: "Skills"),
-            Tab(icon: Icon(Icons.school_outlined), text: "Certificados"),
+            Tab(icon: Icon(Icons.work_outline), text: 'Projetos'),
+            Tab(icon: Icon(Icons.business), text: 'Experiência'),
+            Tab(icon: Icon(Icons.code), text: 'Skills'),
+            Tab(icon: Icon(Icons.school_outlined), text: 'Certificados'),
           ],
         ),
       ),
@@ -152,19 +158,19 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showAddDialog(context, _tabController.index),
-        label: const Text("Adicionar Novo"),
+        label: const Text('Adicionar Novo'),
         icon: const Icon(Icons.add),
       ),
     );
   }
 
-  Widget _buildProjectList(List<ProjectModel> items) {
-    if (items.isEmpty) return _buildEmptyState("Nenhum projeto encontrado.");
+  Widget _buildProjectList(final List<ProjectModel> items) {
+    if (items.isEmpty) return _buildEmptyState('Nenhum projeto encontrado.');
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
       separatorBuilder: (_, _) => const SizedBox(height: 12),
-      itemBuilder: (context, index) {
+      itemBuilder: (final context, final index) {
         final item = items[index];
         return Card(
           elevation: 2,
@@ -195,7 +201,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
                   spacing: 4,
                   children: item.techStack
                       .map(
-                        (t) => Chip(
+                        (final t) => Chip(
                           label: Text(t, style: const TextStyle(fontSize: 10)),
                           padding: EdgeInsets.zero,
                           materialTapTargetSize:
@@ -228,15 +234,15 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
     );
   }
 
-  Widget _buildExperienceList(List<ExperienceModel> items) {
+  Widget _buildExperienceList(final List<ExperienceModel> items) {
     if (items.isEmpty) {
-      return _buildEmptyState("Nenhuma experiência encontrada.");
+      return _buildEmptyState('Nenhuma experiência encontrada.');
     }
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
       separatorBuilder: (_, _) => const SizedBox(height: 12),
-      itemBuilder: (context, index) {
+      itemBuilder: (final context, final index) {
         final item = items[index];
         return Card(
           elevation: 2,
@@ -256,7 +262,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${item.company} • ${item.period}"),
+                Text('${item.company} • ${item.period}'),
                 if (item.isCurrent)
                   Container(
                     margin: const EdgeInsets.only(top: 4),
@@ -269,7 +275,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
-                      "Atual",
+                      'Atual',
                       style: TextStyle(
                         fontSize: 10,
                         color: Colors.green.shade800,
@@ -300,13 +306,13 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
     );
   }
 
-  Widget _buildSkillList(List<SkillModel> items) {
-    if (items.isEmpty) return _buildEmptyState("Nenhuma skill encontrada.");
+  Widget _buildSkillList(final List<SkillModel> items) {
+    if (items.isEmpty) return _buildEmptyState('Nenhuma skill encontrada.');
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
       separatorBuilder: (_, _) => const SizedBox(height: 12),
-      itemBuilder: (context, index) {
+      itemBuilder: (final context, final index) {
         final item = items[index];
         return Card(
           elevation: 2,
@@ -323,7 +329,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
               item.name,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            subtitle: Text("Tipo: ${item.type.name.toUpperCase()}"),
+            subtitle: Text('Tipo: ${item.type.name.toUpperCase()}'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -346,15 +352,15 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
     );
   }
 
-  Widget _buildCertificateList(List<CertificateModel> items) {
+  Widget _buildCertificateList(final List<CertificateModel> items) {
     if (items.isEmpty) {
-      return _buildEmptyState("Nenhum certificado encontrado.");
+      return _buildEmptyState('Nenhum certificado encontrado.');
     }
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
       separatorBuilder: (_, _) => const SizedBox(height: 12),
-      itemBuilder: (context, index) {
+      itemBuilder: (final context, final index) {
         final item = items[index];
         return Card(
           elevation: 2,
@@ -374,8 +380,8 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Emissor: ${item.issuer}"),
-                Text("Data: ${item.date}"),
+                Text('Emissor: ${item.issuer}'),
+                Text('Data: ${item.date}'),
               ],
             ),
             trailing: Row(
@@ -400,7 +406,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
     );
   }
 
-  Widget _buildEmptyState(String message) {
+  Widget _buildEmptyState(final String message) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

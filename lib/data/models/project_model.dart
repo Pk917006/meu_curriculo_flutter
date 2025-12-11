@@ -17,7 +17,7 @@ class ProjectModel {
     this.id,
   });
 
-  factory ProjectModel.fromMap(Map<String, dynamic> map) {
+  factory ProjectModel.fromMap(final Map<String, dynamic> map) {
     return ProjectModel(
       id: map['id'],
       title: map['title'] ?? '',

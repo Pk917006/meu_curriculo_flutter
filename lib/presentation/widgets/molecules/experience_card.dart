@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../data/models/experience_model.dart';
+import 'package:meu_curriculo_flutter/data/models/experience_model.dart';
 
 class ExperienceCard extends StatefulWidget {
   final ExperienceModel experience;
 
-  const ExperienceCard({super.key, required this.experience});
+  const ExperienceCard({required this.experience, super.key});
 
   @override
   State<ExperienceCard> createState() => _ExperienceCardState();
@@ -17,7 +17,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
   bool _isHovered = false;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -29,7 +29,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
         curve: Curves.easeOut,
         margin: const EdgeInsets.only(bottom: 24, left: 16),
         padding: const EdgeInsets.all(24),
-        transform: Matrix4.translationValues(0.0, _isHovered ? -4.0 : 0.0, 0.0),
+        transform: Matrix4.translationValues(0, _isHovered ? -4.0 : 0.0, 0),
         decoration: BoxDecoration(
           color:
               theme.cardTheme.color ??

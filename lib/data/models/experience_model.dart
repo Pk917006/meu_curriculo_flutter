@@ -7,15 +7,11 @@ class ExperienceModel {
   final bool isCurrent; // Para destacar se é o emprego atual
 
   const ExperienceModel({
-    this.id,
-    required this.role,
-    required this.company,
-    required this.period,
-    required this.description,
+    required this.role, required this.company, required this.period, required this.description, this.id,
     this.isCurrent = false,
   });
 
-  factory ExperienceModel.fromMap(Map<String, dynamic> map) {
+  factory ExperienceModel.fromMap(final Map<String, dynamic> map) {
     return ExperienceModel(
       id: map['id'],
       role: map['role'] ?? '',

@@ -13,9 +13,7 @@ class IntroOverlay extends StatefulWidget {
   final VoidCallback onFinished;
 
   const IntroOverlay({
-    super.key,
-    required this.isLoading,
-    required this.onFinished,
+    required this.isLoading, required this.onFinished, super.key,
   });
 
   @override
@@ -25,13 +23,13 @@ class IntroOverlay extends StatefulWidget {
 class _IntroOverlayState extends State<IntroOverlay> {
   final List<String> _logs = [];
   final List<String> _allLogs = [
-    "Carregando módulos do sistema...",
-    "Conectando ao servidor neural...",
-    "Otimizando shaders...",
-    "Compilando experiência...",
-    "Carregando portfólio...",
-    "Verificando integridade...",
-    "Acesso autorizado.",
+    'Carregando módulos do sistema...',
+    'Conectando ao servidor neural...',
+    'Otimizando shaders...',
+    'Compilando experiência...',
+    'Carregando portfólio...',
+    'Verificando integridade...',
+    'Acesso autorizado.',
   ];
 
   Timer? _logTimer;
@@ -45,7 +43,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
   }
 
   @override
-  void didUpdateWidget(covariant IntroOverlay oldWidget) {
+  void didUpdateWidget(covariant final IntroOverlay oldWidget) {
     super.didUpdateWidget(oldWidget);
     // Se terminou de carregar e não estamos saindo ainda, iniciar saída
     if (oldWidget.isLoading && !widget.isLoading && !_isExiting) {
@@ -60,8 +58,8 @@ class _IntroOverlayState extends State<IntroOverlay> {
   }
 
   void _startLogs() {
-    int index = 0;
-    _logTimer = Timer.periodic(const Duration(milliseconds: 400), (timer) {
+    var index = 0;
+    _logTimer = Timer.periodic(const Duration(milliseconds: 400), (final timer) {
       if (index < _allLogs.length) {
         setState(() {
           _logs.add(_allLogs[index]);
@@ -79,7 +77,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
     });
   }
 
-  void _startExitSequence() async {
+  Future<void> _startExitSequence() async {
     if (_isExiting) return;
 
     // Aguarda um pouco para mostrar "Acesso Autorizado" ou similar se quiser
@@ -101,7 +99,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final size = MediaQuery.of(context).size;
     final primaryColor = Theme.of(context).colorScheme.primary;
 
@@ -141,7 +139,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
                                 size: 60,
                                 color: primaryColor,
                               )
-                              .animate(onPlay: (c) => c.repeat())
+                              .animate(onPlay: (final c) => c.repeat())
                               .shimmer(duration: 2.seconds, color: Colors.white)
                               .scale(
                                 begin: const Offset(1, 1),
@@ -157,7 +155,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
                               ),
                           const SizedBox(height: 20),
                           Text(
-                            "SYSTEM INITIALIZATION",
+                            'SYSTEM INITIALIZATION',
                             style: TextStyle(
                               fontFamily: 'Code',
                               color: primaryColor,
@@ -217,7 +215,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
                             )
                           else
                             Text(
-                              "ACCESS GRANTED",
+                              'ACCESS GRANTED',
                               style: TextStyle(
                                 color: Colors.greenAccent,
                                 fontSize: 20,
@@ -241,13 +239,13 @@ class _IntroOverlayState extends State<IntroOverlay> {
                           SizedBox(
                             height: 120,
                             child: Column(
-                              children: _logs.map((log) {
+                              children: _logs.map((final log) {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 2,
                                   ),
                                   child: Text(
-                                    "> $log",
+                                    '> $log',
                                     style: TextStyle(
                                       fontFamily: 'Courier',
                                       color: primaryColor.withValues(
@@ -292,7 +290,7 @@ class GridPainter extends CustomPainter {
   GridPainter({required this.color});
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void paint(final Canvas canvas, final Size size) {
     final paint = Paint()
       ..color = color
       ..strokeWidth = 1;
@@ -309,5 +307,5 @@ class GridPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant final CustomPainter oldDelegate) => false;
 }

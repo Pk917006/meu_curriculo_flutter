@@ -28,6 +28,7 @@ create table skills (
   name text not null,
   type text not null, -- Vamos usar: 'mobile', 'web' ou 'tools'
   is_highlight boolean default false, -- Se é destaque (true/false)
+  icon_asset text, -- Caminho do ícone (opcional)
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
@@ -42,8 +43,6 @@ create policy "Qualquer um pode ler experiencias" on experiences for select usin
 
 alter table skills enable row level security;
 create policy "Qualquer um pode ler skills" on skills for select using (true);
-
-ALTER TABLE skills ADD COLUMN icon_url text;
 
 alter table certificates enable row level security;
 create policy "Public Access" on certificates for select using (true);
@@ -70,3 +69,40 @@ create policy "Admin Delete Skills" on skills for delete to authenticated using 
 create policy "Admin Insert Certs" on certificates for insert to authenticated with check (true);
 create policy "Admin Update Certs" on certificates for update to authenticated using (true);
 create policy "Admin Delete Certs" on certificates for delete to authenticated using (true);
+
+
+create table app_logs (
+  id bigserial primary key,
+  level text,         -- info, debug, error, warning
+  message text,
+  stack text,
+  timestamp timestamptz default now(),
+  user_id uuid        -- opcional, se tiver login
+);
+
+-- Habilitar RLS
+alter table app_logs enable row level security;
+
+-- Permitir inserção de logs (autenticados ou anônimos)
+create policy "Qualquer um pode inserir logs"
+on app_logs
+for insert
+with check (true);
+
+-- Permitir que o usuário selecione apenas seus próprios logs
+create policy "Usuário pode ler seus próprios logs"
+on app_logs
+for select
+using (auth.uid() = user_id);
+
+-- Permitir que admins leiam todos os logs
+create policy "Admin pode ler todos os logs"
+on app_logs
+for select
+using (auth.uid() IN (
+  -- Adicione aqui os UUIDs dos usuários admin
+  -- Exemplo: 'uuid-do-admin-1', 'uuid-do-admin-2'
+  select id from auth.users where email = 'seu-email-admin@exemplo.com'
+));
+
+

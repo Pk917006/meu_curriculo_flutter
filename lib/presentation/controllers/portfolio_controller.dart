@@ -2,11 +2,12 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../data/models/certificate_model.dart';
-import '../../data/models/experience_model.dart';
-import '../../data/models/project_model.dart';
-import '../../data/models/skill_model.dart';
-import '../../data/repositories/portfolio_repository.dart';
+import 'package:meu_curriculo_flutter/core/utils/app_logger.dart';
+import 'package:meu_curriculo_flutter/data/models/certificate_model.dart';
+import 'package:meu_curriculo_flutter/data/models/experience_model.dart';
+import 'package:meu_curriculo_flutter/data/models/project_model.dart';
+import 'package:meu_curriculo_flutter/data/models/skill_model.dart';
+import 'package:meu_curriculo_flutter/data/repositories/portfolio_repository.dart';
 
 class PortfolioController extends ChangeNotifier {
   final IPortfolioRepository repository;
@@ -40,7 +41,7 @@ class PortfolioController extends ChangeNotifier {
   final projectsKey = GlobalKey();
   final certificatesKey = GlobalKey();
 
-  Future<void> scrollToSection(GlobalKey key) async {
+  Future<void> scrollToSection(final GlobalKey key) async {
     final context = key.currentContext;
     if (context != null) {
       await Scrollable.ensureVisible(
@@ -64,9 +65,14 @@ class PortfolioController extends ChangeNotifier {
         _loadSkills(),
         _loadCertificates(),
       ]);
-    } catch (e) {
+    } catch (e, stack) {
       debugPrint('Erro ao carregar dados: $e');
       errorMessage = 'Falha ao carregar dados. Verifique sua conexão.';
+      await AppLogger.log(
+        level: 'error',
+        message: e.toString(),
+        stack: stack.toString(),
+      );
     } finally {
       isLoading = false;
       notifyListeners();

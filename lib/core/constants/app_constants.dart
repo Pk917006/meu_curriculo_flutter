@@ -25,6 +25,9 @@ class AppStrings {
   static const String whatsappUrl =
       'https://api.whatsapp.com/send?phone=5582999915558';
   static const String emailUrl = 'mailto:franklyn.dev.mobile@gmail.com';
+
+  static const String gitHubRepositoriesUrl =
+      'https://github.com/Franklyn-R-Silva?tab=repositories';
 }
 
 class AppColors {

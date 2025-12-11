@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../data/models/project_model.dart';
-import '../../controllers/auth_controller.dart';
-import '../../controllers/portfolio_controller.dart';
-import '../atoms/custom_text_field.dart';
-import '../atoms/tech_autocomplete_field.dart';
+import 'package:meu_curriculo_flutter/core/utils/app_logger.dart';
+import 'package:meu_curriculo_flutter/data/models/project_model.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/auth_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/portfolio_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/custom_text_field.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/tech_autocomplete_field.dart';
 
 class ProjectForm extends StatefulWidget {
   final ProjectModel? project;
@@ -89,7 +90,12 @@ class _ProjectFormState extends State<ProjectForm> {
           const SnackBar(content: Text('Projeto salvo com sucesso!')),
         );
       }
-    } catch (e) {
+    } catch (e, stack) {
+      await AppLogger.log(
+        level: 'error',
+        message: e.toString(),
+        stack: stack.toString(),
+      );
       if (mounted) {
         ScaffoldMessenger.of(
           context,
@@ -101,7 +107,7 @@ class _ProjectFormState extends State<ProjectForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
@@ -161,7 +167,7 @@ class _ProjectFormState extends State<ProjectForm> {
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
-                            children: _selectedTechs.map((tech) {
+                            children: _selectedTechs.map((final tech) {
                               return Chip(
                                 label: Text(tech),
                                 onDeleted: () {
@@ -178,13 +184,13 @@ class _ProjectFormState extends State<ProjectForm> {
                             label: 'Adicionar Tecnologia',
                             icon: Icons.code,
                             excludeItems: _selectedTechs,
-                            onSelected: (val) {
+                            onSelected: (final val) {
                               setState(() {
                                 _selectedTechs.add(val);
                                 _techInputCtrl.clear();
                               });
                             },
-                            onFieldSubmitted: (val) {
+                            onFieldSubmitted: (final val) {
                               if (val.isNotEmpty) {
                                 setState(() {
                                   _selectedTechs.add(val);
