@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:meu_curriculo_flutter/core/constants/app_constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import '../../../data/models/project_model.dart';
@@ -12,6 +14,14 @@ class ProjectsSection extends StatelessWidget {
   final List<ProjectModel> projects;
 
   const ProjectsSection({super.key, required this.projects});
+
+  void _launchGitHub() async {
+    final Uri url = Uri.parse(AppStrings.gitHubRepositoriesUrl);
+
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +40,7 @@ class ProjectsSection extends StatelessWidget {
               ),
             ),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: _launchGitHub,
               icon: const Icon(Icons.arrow_forward),
               label: const Text("Ver todos no GitHub"),
             ),
