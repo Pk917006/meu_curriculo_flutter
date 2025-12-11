@@ -8,8 +8,7 @@ class AppAssets {
   static const String profileImage = 'assets/img/minha_foto.jpg';
 
   // Documentos
-  static const String cvPtBr =
-      'assets/docs/curriculo_2024_Franklyn_Roberto.pdf';
+  static const String cvPtBr = 'assets/pdf/Curriculo_Franklyn_flutter.pdf';
 }
 
 class AppStrings {
