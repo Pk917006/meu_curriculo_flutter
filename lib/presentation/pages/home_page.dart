@@ -10,8 +10,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:meu_curriculo_flutter/l10n/arb/app_localizations.dart';
+import 'package:meu_curriculo_flutter/presentation/pages/admin/admin_dashboard_page.dart';
 import 'package:meu_curriculo_flutter/presentation/pages/admin/login_page.dart';
 import '../../../core/constants/app_constants.dart';
+import '../controllers/auth_controller.dart';
 import '../controllers/portfolio_controller.dart';
 import '../widgets/organisms/certificates_section.dart';
 import '../widgets/organisms/experience_section.dart';
@@ -205,13 +207,46 @@ class _HomePageState extends State<HomePage> {
             ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => launchUrl(Uri.parse(AppAssets.cvPtBr)),
-        label: const Text("Baixar CV"),
-        icon: const Icon(Icons.download_rounded),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
-      ),
+      floatingActionButton: _buildFloatingActionButtons(context),
+    );
+  }
+
+  Widget _buildFloatingActionButtons(BuildContext context) {
+    final authController = context.watch<AuthController>();
+    final isLoggedIn = authController.isLogged;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        // Botão de Admin (só aparece se estiver logado)
+        if (isLoggedIn) ...[
+          FloatingActionButton(
+            heroTag: 'admin_fab',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AdminDashboardPage(),
+                ),
+              );
+            },
+            backgroundColor: Colors.deepPurple,
+            foregroundColor: Colors.white,
+            child: const Icon(Icons.admin_panel_settings),
+          ),
+          const SizedBox(height: 12),
+        ],
+        // Botão de Download CV (sempre visível)
+        FloatingActionButton.extended(
+          heroTag: 'download_fab',
+          onPressed: () => launchUrl(Uri.parse(AppAssets.cvPtBr)),
+          label: const Text("Baixar CV"),
+          icon: const Icon(Icons.download_rounded),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Colors.white,
+        ),
+      ],
     );
   }
 }
